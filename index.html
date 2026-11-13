@@ -1,0 +1,1678 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mi Registro Nutricional · Hospital Regional Río Grande</title>
+<meta name="description" content="Herramienta de seguimiento de hábitos nutricionales para pacientes del Servicio de Nutrición del Hospital Regional Río Grande, Tierra del Fuego.">
+<!--
+  PENDIENTES PARA COMPLETAR:
+  1) Logo: guardá el archivo como "logo-hospital.png" en la misma carpeta que este index.html.
+  2) Nombre del proyecto: buscá "Mi Registro Nutricional" y reemplazalo si elegís otro.
+  3) Contacto: completá el correo o teléfono del servicio en la sección #contacto.
+  4) Autorización: podés agregar en el pie el nombre de la jefatura que aprobó el proyecto.
+-->
+<style>
+:root{
+  --azul:#0b5c8e; --azul-osc:#083f63; --azul-cl:#e8f2f9;
+  --verde:#1f8a7d; --verde-cl:#e3f4f1;
+  --texto:#1d2b36; --gris:#52626f; --borde:#d3dfe8; --bg:#f7fafc; --blanco:#fff;
+  --warn:#b45309; --radio:14px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:18px;line-height:1.6;color:var(--texto);background:var(--bg)}
+h1,h2,h3{line-height:1.25;color:var(--azul-osc);margin:0 0 .5em}
+h1{font-size:clamp(1.9rem,5vw,2.9rem)}
+h2{font-size:clamp(1.5rem,3.5vw,2.1rem)}
+h3{font-size:1.2rem}
+p{margin:0 0 1em}
+a{color:var(--azul)}
+:focus-visible{outline:3px solid #f59e0b;outline-offset:2px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+section{padding:56px 0}
+.alt{background:var(--blanco)}
+.skip{position:absolute;left:-999px;top:0;background:var(--azul-osc);color:#fff;padding:10px 16px;z-index:99}
+.skip:focus{left:8px;top:8px}
+
+/* Encabezado */
+header.top{background:var(--blanco);border-bottom:1px solid var(--borde)}
+.top .wrap{display:flex;align-items:center;gap:14px;padding-top:12px;padding-bottom:12px}
+.logo{height:56px;width:auto}
+.top .nombre{font-weight:700;color:var(--azul-osc);line-height:1.2}
+.top .nombre small{display:block;font-weight:500;color:var(--gris);font-size:.8rem}
+.top nav{margin-left:auto;display:none;gap:18px}
+.top nav a{text-decoration:none;font-weight:600;font-size:.95rem}
+@media(min-width:820px){.top nav{display:flex}}
+
+/* Portada */
+.hero{background:linear-gradient(135deg,var(--azul-cl),var(--verde-cl));padding:64px 0}
+.hero .wrap{display:grid;gap:28px;align-items:center}
+@media(min-width:820px){.hero .wrap{grid-template-columns:1.3fr 1fr}}
+.hero p.lead{font-size:1.2rem;color:#2c3e4b}
+.btn{display:inline-block;background:var(--azul);color:#fff;border:0;border-radius:12px;padding:14px 24px;font-size:1.05rem;font-weight:700;text-decoration:none;cursor:pointer;min-height:48px}
+.btn:hover{background:var(--azul-osc)}
+.btn.sec{background:#fff;color:var(--azul);border:2px solid var(--azul)}
+.btn.sec:hover{background:var(--azul-cl)}
+.btn.verde{background:var(--verde)}
+.btn.verde:hover{background:#17695f}
+.btn.peligro{background:#fff;color:#b91c1c;border:2px solid #b91c1c}
+.btn.peligro:hover{background:#fee2e2}
+.btn.chico{padding:8px 14px;font-size:.95rem;min-height:40px}
+.hero-card{background:#fff;border-radius:var(--radio);padding:22px;box-shadow:0 8px 24px rgba(8,63,99,.12)}
+.hero-card ul{list-style:none;padding:0;margin:0}
+.hero-card li{padding:8px 0;border-bottom:1px solid var(--borde)}
+.hero-card li:last-child{border:0}
+
+/* Tarjetas */
+.grid{display:grid;gap:18px}
+@media(min-width:700px){.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}}
+.card{background:#fff;border:1px solid var(--borde);border-radius:var(--radio);padding:22px}
+.alt .card{background:var(--bg)}
+.num{display:inline-flex;width:40px;height:40px;border-radius:50%;background:var(--azul);color:#fff;align-items:center;justify-content:center;font-weight:700;margin-bottom:10px}
+.ico{font-size:1.9rem;display:block;margin-bottom:6px}
+
+/* Herramienta */
+#herramienta{background:linear-gradient(180deg,var(--verde-cl),var(--bg))}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
+.tab{flex:1 1 120px;background:#fff;border:2px solid var(--borde);border-radius:12px;padding:12px 10px;font-size:1rem;font-weight:700;color:var(--azul-osc);cursor:pointer;min-height:48px}
+.tab[aria-selected="true"]{background:var(--azul);border-color:var(--azul);color:#fff}
+.panel{background:#fff;border:1px solid var(--borde);border-radius:var(--radio);padding:22px}
+fieldset{border:1px solid var(--borde);border-radius:12px;margin:0 0 18px;padding:14px 16px}
+legend{font-weight:700;color:var(--azul-osc);padding:0 8px}
+.checks{display:grid;gap:10px}
+@media(min-width:700px){.checks{grid-template-columns:1fr 1fr}}
+.check{display:flex;align-items:center;gap:12px;background:var(--bg);border:2px solid var(--borde);border-radius:12px;padding:12px 14px;cursor:pointer;min-height:52px}
+.check input{width:24px;height:24px;accent-color:var(--verde);flex:none}
+.check:has(input:checked){border-color:var(--verde);background:var(--verde-cl)}
+.contador{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--bg);border:2px solid var(--borde);border-radius:12px;padding:10px 14px;margin-bottom:10px;flex-wrap:wrap}
+.contador .ctl{display:flex;align-items:center;gap:12px}
+.contador button{width:44px;height:44px;border-radius:50%;border:2px solid var(--azul);background:#fff;color:var(--azul);font-size:1.4rem;font-weight:700;cursor:pointer}
+.contador button:hover{background:var(--azul-cl)}
+.contador output{min-width:64px;text-align:center;font-weight:700;font-size:1.2rem}
+.contador small{color:var(--gris);display:block}
+.opciones{display:flex;gap:8px;flex-wrap:wrap}
+.opcion{position:relative}
+.opcion input{position:absolute;opacity:0}
+.opcion span{display:block;border:2px solid var(--borde);border-radius:12px;padding:10px 16px;background:var(--bg);cursor:pointer;min-height:48px;font-weight:600}
+.opcion input:checked+span{border-color:var(--azul);background:var(--azul-cl)}
+.opcion input:focus-visible+span{outline:3px solid #f59e0b;outline-offset:2px}
+.cara span{font-size:1.8rem;padding:6px 14px;line-height:1.3}
+label.campo{display:block;font-weight:600;margin-bottom:6px}
+input[type=text],input[type=number],input[type=date],textarea{width:100%;font:inherit;padding:11px 12px;border:2px solid var(--borde);border-radius:10px;background:#fff;color:var(--texto)}
+textarea{min-height:90px;resize:vertical}
+.fila{display:grid;gap:12px;margin-bottom:14px}
+@media(min-width:600px){.fila.dos{grid-template-columns:1fr 1fr}}
+.estado{font-size:.9rem;color:var(--verde);min-height:1.4em;font-weight:600}
+.progreso{height:18px;background:#e5edf3;border-radius:999px;overflow:hidden}
+.progreso>div{height:100%;background:linear-gradient(90deg,var(--verde),#37b5a5);border-radius:999px;transition:width .3s}
+.resumen-dia{background:var(--azul-cl);border-radius:12px;padding:16px;margin-bottom:18px}
+.resumen-dia strong{font-size:1.3rem;color:var(--azul-osc)}
+.barra-h{display:grid;grid-template-columns:minmax(120px,40%) 1fr auto;gap:10px;align-items:center;margin-bottom:8px;font-size:.95rem}
+.barra-h .progreso{height:14px}
+.meta-star{color:#b45309;font-weight:700}
+.msg{background:var(--verde-cl);border-left:5px solid var(--verde);border-radius:8px;padding:14px 16px;margin:16px 0}
+.vacio{color:var(--gris);font-style:italic}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th,td{border:1px solid var(--borde);padding:6px 8px;text-align:center}
+th:first-child,td:first-child{text-align:left}
+th{background:var(--azul-cl)}
+.tabla-scroll{overflow-x:auto}
+svg.grafico{width:100%;height:auto;background:#fff;border:1px solid var(--borde);border-radius:12px}
+.kpis{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));margin:14px 0}
+.kpi{background:var(--bg);border:1px solid var(--borde);border-radius:12px;padding:12px;text-align:center}
+.kpi b{display:block;font-size:1.5rem;color:var(--azul-osc)}
+.kpi span{font-size:.85rem;color:var(--gris)}
+.acciones{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.dato-borrar{background:none;border:0;color:#b91c1c;cursor:pointer;font-size:.9rem;text-decoration:underline}
+
+/* Recetas */
+details.receta{background:#fff;border:1px solid var(--borde);border-radius:var(--radio);margin-bottom:12px;padding:0}
+details.receta summary{cursor:pointer;padding:16px 20px;font-weight:700;color:var(--azul-osc);list-style:none;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+details.receta summary::-webkit-details-marker{display:none}
+details.receta summary::before{content:"＋";color:var(--verde);font-size:1.3rem}
+details.receta[open] summary::before{content:"－"}
+.etiqueta{font-size:.8rem;font-weight:600;background:var(--verde-cl);color:#17695f;border-radius:999px;padding:2px 10px}
+.receta-cuerpo{padding:0 20px 18px}
+.receta-cuerpo ul,.receta-cuerpo ol{padding-left:22px;margin:0 0 1em}
+.consejo{background:var(--verde-cl);border-radius:10px;padding:10px 14px}
+
+/* Aviso */
+.aviso{background:#fff7ed;border:2px solid #f59e0b;border-radius:var(--radio);padding:16px 20px;color:#7c2d12}
+footer{background:var(--azul-osc);color:#dbe9f3;padding:36px 0;font-size:.95rem}
+footer a{color:#fff}
+footer .wrap{display:grid;gap:16px}
+
+/* Vista consulta / impresión */
+.solo-imprimir{display:none}
+@media print{
+  body{background:#fff;font-size:12pt}
+  .no-print,.tabs,.acciones,header.top,footer,section:not(#herramienta){display:none!important}
+  #herramienta{background:#fff;padding:0}
+  .panel{border:0;padding:0}
+  .panel[hidden]{display:none!important}
+  .solo-imprimir{display:block}
+  .tabla-scroll{overflow:visible}
+}
+/* ---------- Versión colorida ---------- */
+:root{--naranja:#f08a24;--amarillo:#ffc93c;--rosa:#e8537a;--lila:#7b5ea7;--celeste:#2fa8d8}
+.hero{background:linear-gradient(135deg,#d6efff 0%,#dff7e8 45%,#fff0c9 100%)}
+.hero h1{color:var(--azul)}
+h2::after{content:"";display:block;width:110px;height:6px;border-radius:6px;margin-top:8px;background:linear-gradient(90deg,var(--celeste),var(--verde),var(--amarillo),var(--naranja),var(--rosa))}
+.card{border-top:6px solid var(--celeste)}
+.grid>.card:nth-child(4n+2){border-top-color:var(--verde)}
+.grid>.card:nth-child(4n+3){border-top-color:var(--naranja)}
+.grid>.card:nth-child(4n+4){border-top-color:var(--rosa)}
+.grid>.card:nth-child(2) .num{background:var(--verde)}
+.grid>.card:nth-child(3) .num{background:var(--naranja)}
+.hero-card{border-top:6px solid var(--amarillo)}
+.objetivo{border-top-color:var(--naranja)!important;background:linear-gradient(135deg,#fff8e6,#fff)}
+.objetivo ul{margin:0;padding-left:22px}
+.objetivo li{margin-bottom:6px}
+.tab{border-width:2px}
+#tab-hoy{border-color:var(--verde);color:#17695f}
+#tab-semana{border-color:var(--naranja);color:#a85a08}
+#tab-peso{border-color:var(--celeste);color:#0b5c8e}
+#tab-consulta{border-color:var(--lila);color:#5a3f85}
+#tab-hoy[aria-selected="true"]{background:var(--verde);color:#fff}
+#tab-semana[aria-selected="true"]{background:var(--naranja);color:#fff}
+#tab-peso[aria-selected="true"]{background:var(--celeste);color:#fff}
+#tab-consulta[aria-selected="true"]{background:var(--lila);color:#fff}
+#p-hoy{border-top:6px solid var(--verde)}
+#p-semana{border-top:6px solid var(--naranja)}
+#p-peso{border-top:6px solid var(--celeste)}
+#p-consulta{border-top:6px solid var(--lila)}
+legend{background:var(--amarillo);color:#5a3d00;border-radius:999px;padding:2px 16px}
+.resumen-dia{background:linear-gradient(135deg,#d6efff,#fff0c9)}
+.progreso>div{background:linear-gradient(90deg,var(--celeste),var(--verde),var(--amarillo))}
+.msg{background:linear-gradient(135deg,#e3f4f1,#fff6d6);border-left-color:var(--naranja)}
+.kpi:nth-child(4n+1) b{color:var(--azul)}
+.kpi:nth-child(4n+2) b{color:var(--verde)}
+.kpi:nth-child(4n+3) b{color:var(--naranja)}
+.kpi:nth-child(4n+4) b{color:var(--rosa)}
+.check:has(input:checked){background:#dcf5e4;border-color:var(--verde)}
+.opcion input:checked+span{background:#ffe9c7;border-color:var(--naranja)}
+.btn.verde{background:var(--verde)}
+details.receta{border-left:6px solid var(--naranja)}
+details.receta:nth-of-type(3n+2){border-left-color:var(--verde)}
+details.receta:nth-of-type(3n+3){border-left-color:var(--rosa)}
+.etiqueta{background:#ffe9c7;color:#8a4b00}
+.etiqueta:nth-of-type(2){background:#d8f0ff;color:#0b5c8e}
+.etiqueta:nth-of-type(3){background:#fde0e8;color:#a3153f}
+.consejo{background:#fff6d6;border-left:5px solid var(--amarillo)}
+footer{background:linear-gradient(135deg,#083f63,#1f6f8b)}
+/* ---------- Plato alimentario ---------- */
+.plato-grid{display:grid;gap:26px;align-items:center;margin-top:18px}
+@media(min-width:760px){.plato-grid{grid-template-columns:1fr 1fr}}
+.plato-svg{width:100%;max-width:420px;margin:0 auto;display:block;filter:drop-shadow(0 8px 14px rgba(8,63,99,.18))}
+.grupos{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.grupos li{background:#fff;border:1px solid var(--borde);border-left:10px solid var(--c);border-radius:12px;padding:10px 14px}
+.grupos b{display:block;color:var(--azul-osc)}
+.grupos small{color:var(--gris);font-size:.9rem;line-height:1.4;display:block}
+details.receta summary{font-size:1.05rem}
+/* ---------- Plato estilo consulta ---------- */
+.plato-grid{display:grid;gap:26px;align-items:center;margin-top:18px}
+@media(min-width:760px){.plato-grid{grid-template-columns:1fr 1fr}}
+.plato2{width:100%;max-width:440px;aspect-ratio:1/1;margin:0 auto;border-radius:50%;border:14px solid #e6e9ef;background:#fff;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:6px;box-shadow:0 10px 24px rgba(8,63,99,.18)}
+.plato2>div{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff;padding:8px;font-weight:700;line-height:1.2}
+.pl-verde{grid-row:1/3;background:#2f8040}
+.pl-amarillo{background:#ebb94d;color:#3f2c00}
+.pl-naranja{background:#c9501f}
+.pl-emojis{font-size:clamp(1.2rem,5vw,2rem);letter-spacing:2px;line-height:1.35}
+.pl-verde .pl-emojis{max-width:190px}
+.plato2 b{font-size:clamp(1.15rem,4.5vw,1.8rem)}
+.plato2>div>span:last-child{font-size:clamp(.85rem,3vw,1.1rem)}
+.leyenda{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.leyenda li{background:#fff;border:1px solid var(--borde);border-left:10px solid var(--c);border-radius:12px;padding:12px 14px}
+.leyenda b{display:block;color:var(--azul-osc)}
+.leyenda small{color:var(--gris);display:block;font-size:.95rem;line-height:1.4}
+
+/* ---------- Juegos ---------- */
+.juego h3{margin-bottom:6px}
+.juego-area{min-height:260px}
+.paso{color:var(--gris);font-size:.9rem;margin:0 0 6px}
+.alimento{text-align:center;font-size:4.2rem;line-height:1.1;margin:4px 0}
+.alimento small{display:block;font-size:1.25rem;font-weight:700;color:var(--azul-osc);margin-top:4px}
+.resp{display:grid;gap:8px;margin-top:10px}
+.opt{display:block;width:100%;text-align:left;font:inherit;font-weight:600;padding:12px 14px;border-radius:12px;border:2px solid var(--borde);background:#fff;color:var(--texto);cursor:pointer;min-height:48px}
+.opt small{font-weight:500;color:var(--gris)}
+.opt:hover:not(:disabled){background:var(--azul-cl);border-color:var(--celeste)}
+.opt:disabled{cursor:default;opacity:1;color:var(--texto)}
+.opt.ok{background:#dcf5e4;border-color:#2f8040}
+.opt.mal{background:#fde0e0;border-color:#c0392b}
+.fb{margin:10px 0 6px;font-weight:700;min-height:1.5em}
+.final{text-align:center;padding:14px 0}
+.final .grande{font-size:2.6rem;font-weight:800;color:var(--azul-osc);margin:0}
+
+/* ---------- IMC ---------- */
+.imc-barra{position:relative;height:18px;border-radius:999px;margin:34px 0 4px;background:linear-gradient(90deg,#2fa8d8 0%,#2fa8d8 14%,#4fa35f 14%,#4fa35f 40%,#ebb94d 40%,#ebb94d 60%,#c9501f 60%,#c9501f 100%)}
+.imc-marca{position:absolute;top:-12px;width:6px;height:42px;background:var(--azul-osc);border-radius:3px;transform:translateX(-50%);border:2px solid #fff}
+.imc-escala{position:relative;height:22px;font-size:.8rem;color:var(--gris)}
+.imc-escala span{position:absolute;transform:translateX(-50%)}
+
+/* ---------- Fotos de recetas ---------- */
+.foto{margin:0 0 14px;border-radius:12px;overflow:hidden;background:linear-gradient(135deg,#ffe9c7,#d8f0ff);text-align:center}
+.foto img{display:block;width:100%;max-height:340px;object-fit:cover}
+.foto .emo{font-size:3.2rem;line-height:1.6}
+.foto:not(.sin-foto) .emo{display:none}
+.foto.sin-foto img{display:none}
+.top nav{gap:14px}
+.top nav a{font-size:.9rem}
+/* ---------- Elegir hábitos ---------- */
+.elegir{background:var(--bg);border:2px dashed var(--borde);border-radius:12px;padding:10px 14px;margin-bottom:16px}
+.elegir summary{cursor:pointer;font-weight:700;color:var(--azul-osc);min-height:32px;display:flex;align-items:center}
+.elegir .checks{margin-top:10px}
+
+/* ---------- Lista de compras ---------- */
+.cmp-grupo{margin-bottom:16px}
+.cmp-grupo h4{margin:0 0 8px;padding:6px 14px;border-radius:999px;display:inline-block;background:var(--c);color:var(--t);font-size:1rem}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:inherit;font-weight:600;padding:9px 14px;min-height:44px;border-radius:999px;border:2px solid var(--c);background:#fff;color:var(--texto);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--c);color:var(--t)}
+.chip[aria-pressed="true"]::before{content:"✓ "}
+.cmp-add{display:flex;gap:10px;flex-wrap:wrap}
+.cmp-add input{flex:1 1 200px;width:auto}
+.cmp-ul{list-style:none;padding:0;margin:0}
+.cmp-ul li{display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid var(--borde)}
+.cmp-item{display:flex;align-items:center;gap:12px;flex:1;cursor:pointer;min-height:46px}
+.cmp-item input{width:24px;height:24px;accent-color:var(--verde);flex:none}
+.cmp-item input:checked+span{text-decoration:line-through;color:var(--gris)}
+
+/* ---------- Etiquetas ---------- */
+.et-grid{display:grid;gap:22px;margin-top:18px}
+@media(min-width:820px){.et-grid{grid-template-columns:1.1fr 1fr;align-items:start}}
+.paquete{background:linear-gradient(160deg,#fff3c4,#ffd9a8);border:4px solid #f08a24;border-radius:18px;padding:16px;display:grid;gap:10px;max-width:480px;margin:0 auto;width:100%}
+.pk-nombre{text-align:center;font-weight:800;font-size:1.25rem;color:#7a2e00;text-transform:uppercase;letter-spacing:.5px}
+.zona{display:block;width:100%;text-align:left;font:inherit;color:var(--texto);background:rgba(255,255,255,.88);border:3px solid transparent;border-radius:12px;padding:10px;cursor:pointer}
+.zona:hover{border-color:#f08a24}
+.zona.on{border-color:var(--zc,#f08a24);box-shadow:0 0 0 3px #fff,0 0 0 6px var(--zc,#f08a24)}
+.zn{display:inline-flex;width:26px;height:26px;border-radius:50%;background:var(--azul-osc);color:#fff;font-size:.85rem;font-weight:800;align-items:center;justify-content:center;margin-right:8px}
+.octs{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:8px}
+.oct{width:92px;height:92px;background:#111;color:#fff;clip-path:polygon(30% 0,70% 0,100% 30%,100% 70%,70% 100%,30% 100%,0 70%,0 30%);display:flex;align-items:center;justify-content:center;text-align:center;font-size:.68rem;font-weight:800;line-height:1.1;padding:14px}
+.oct-s{width:76px;height:76px;font-size:.56rem;padding:10px}
+.nut{display:block;font-size:.88rem;margin-top:6px}
+.nut .f{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:6px;padding:3px 0;border-bottom:1px solid #d8c9a6}
+.et-info{background:#fff;border:4px solid var(--zc,var(--borde));border-radius:14px;padding:16px;min-height:170px}
+.et-info p{margin:8px 0 0}
+.duelo{display:grid;gap:12px;margin-top:10px}
+@media(min-width:600px){.duelo{grid-template-columns:1fr 1fr}}
+.prod{display:flex;flex-direction:column;gap:6px;text-align:left;font:inherit;background:#fff;border:3px solid var(--borde);border-radius:14px;padding:12px;cursor:pointer;color:var(--texto)}
+.prod:hover:not(:disabled){border-color:var(--celeste)}
+.prod:disabled{cursor:default}
+.prod.ok{background:#dcf5e4;border-color:#2f8040}
+.prod.mal{background:#fde0e0;border-color:#c0392b}
+.prod .pd{font-size:.9rem;color:var(--gris)}
+.sinoct{color:#2f8040;font-weight:700}
+.afirm{font-size:1.2rem;font-weight:700;margin:6px 0 8px}
+/* ---------- Paleta turquesa y coral ---------- */
+:root{--azul:#0b7a7a;--azul-osc:#064e4e;--azul-cl:#dff4f1;--verde:#d0472f;--verde-cl:#ffe9e3;--celeste:#14a3a0;--amarillo:#ffcf5a;--naranja:#f08a5e;--bg:#f6fbfa;--borde:#cfe3e0}
+#herramienta{background:linear-gradient(180deg,#dff4f1,var(--bg))}
+.hero{background:linear-gradient(135deg,#d7f3ef 0%,#ffe4dc 55%,#fff1c9 100%)}
+h2::after{background:linear-gradient(90deg,#14a3a0,#52c7bd,#ffcf5a,#f08a5e,#d0472f)}
+.card{border-top-color:#14a3a0}
+.grid>.card:nth-child(4n+2){border-top-color:#e8604c}
+.grid>.card:nth-child(4n+3){border-top-color:#f2b630}
+.grid>.card:nth-child(4n+4){border-top-color:#52c7bd}
+.grid>.card:nth-child(2) .num{background:#d0472f}
+.grid>.card:nth-child(3) .num{background:#9a6200}
+.hero-card{border-top-color:#ffcf5a}
+.objetivo{border-top-color:#e8604c!important;background:linear-gradient(135deg,#fff1ec,#fff)}
+#tab-hoy{border-color:#0b7a7a;color:#064e4e}
+#tab-semana{border-color:#d0472f;color:#a23420}
+#tab-peso{border-color:#f2b630;color:#7a4e00}
+#tab-consulta{border-color:#7b5ea7;color:#5a3f85}
+#tab-hoy[aria-selected="true"]{background:#0b7a7a;color:#fff}
+#tab-semana[aria-selected="true"]{background:#d0472f;color:#fff}
+#tab-peso[aria-selected="true"]{background:#9a6200;color:#fff;border-color:#9a6200}
+#tab-consulta[aria-selected="true"]{background:#7b5ea7;color:#fff}
+#p-hoy{border-top-color:#0b7a7a}
+#p-semana{border-top-color:#d0472f}
+#p-peso{border-top-color:#f2b630}
+#p-consulta{border-top-color:#7b5ea7}
+legend{background:#ffe6a3;color:#5a3d00}
+.resumen-dia{background:linear-gradient(135deg,#d7f3ef,#fff1c9)}
+.progreso>div{background:linear-gradient(90deg,#14a3a0,#52c7bd,#ffcf5a)}
+.msg{background:linear-gradient(135deg,#e0f5f3,#fff1d6);border-left-color:#e8604c}
+.kpi:nth-child(4n+1) b{color:#0b7a7a}
+.kpi:nth-child(4n+2) b{color:#d0472f}
+.kpi:nth-child(4n+3) b{color:#9a6200}
+.kpi:nth-child(4n+4) b{color:#b0235a}
+.check:has(input:checked){background:#e0f5f3;border-color:#0b7a7a}
+.opcion input:checked+span{background:#ffe9c7;border-color:#e8604c}
+.btn.verde:hover{background:#b23a24}
+details.receta{border-left-color:#e8604c}
+details.receta:nth-of-type(3n+2){border-left-color:#14a3a0}
+details.receta:nth-of-type(3n+3){border-left-color:#f2b630}
+.etiqueta:nth-of-type(2){background:#d6f3f0;color:#064e4e}
+footer{background:linear-gradient(135deg,#064e4e,#0b7a7a)}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.progreso>div{transition:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#herramienta">Ir directo a mi registro</a>
+
+<header class="top no-print">
+  <div class="wrap">
+    <img class="logo" src="logo-hospital.png" alt="Logo del Hospital Regional Río Grande" onerror="this.style.display='none'">
+    <div class="nombre">Servicio de Nutrición
+      <small>Hospital Regional Río Grande · Tierra del Fuego</small>
+    </div>
+    <nav aria-label="Secciones">
+      <a href="#herramienta">Mi registro</a>
+      <a href="#plato">Mi plato</a>
+      <a href="#compras">Compras</a>
+      <a href="#etiquetas">Etiquetas</a>
+      <a href="#jugar">Jugá</a>
+      <a href="#imc">IMC</a>
+      <a href="#recetas">Recetas</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<!-- 1. PORTADA -->
+<section class="hero no-print" aria-labelledby="t-hero">
+  <div class="wrap">
+    <div>
+      <h1 id="t-hero">Mi Registro Nutricional</h1>
+      <p class="lead">Anotá tus hábitos todos los días y llevá tu progreso a cada control. Así, tu nutricionista y vos pueden ver juntos cómo te está yendo.</p>
+      <a class="btn" href="#herramienta">Empezar mi registro</a>
+      <a class="btn sec" href="#como">Ver cómo funciona</a>
+    </div>
+    <div class="hero-card" aria-label="Lo que podés hacer">
+      <ul>
+        <li>✅ Registrar tus comidas y hábitos del día</li>
+        <li>📊 Ver tu resumen diario y semanal</li>
+        <li>⚖️ Seguir tu curva de peso y tus objetivos</li>
+        <li>🛒 Armar tu lista de compras semanal</li>
+        <li>🏷️ Aprender a leer etiquetas</li>
+        <li>🎮 Jugar y repasar lo que aprendiste en la consulta</li>
+        <li>🥗 Descubrir recetas mediterráneas simples</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 2. PROBLEMA -->
+<section class="alt no-print" aria-labelledby="t-prob">
+  <div class="wrap">
+    <h2 id="t-prob">Entre una consulta y otra, es fácil perder el hilo</h2>
+    <div class="grid g2">
+      <div class="card">
+        <p>Después de la consulta, el día a día se complica: se olvida qué se comió, cuánta agua se tomó o cómo se durmió. Cuando llega el próximo control, cuesta recordar cómo fue la semana.</p>
+      </div>
+      <div class="card">
+        <p><strong>Esta herramienta te ayuda a</strong> registrar en un minuto por día, ver tus avances y tener algo concreto para conversar con tu nutricionista, sin depender de la memoria.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OBJETIVO -->
+<section class="no-print" aria-labelledby="t-obj">
+  <div class="wrap">
+    <h2 id="t-obj">Nuestro objetivo</h2>
+    <div class="card objetivo">
+      <p><strong>Mejorar la adherencia al tratamiento nutricional</strong> de las personas que se atienden en el Servicio de Nutrición, acompañándolas entre una consulta y la siguiente con un registro diario simple de sus hábitos.</p>
+      <p style="margin-bottom:6px"><strong>Para lograrlo, buscamos:</strong></p>
+      <ul>
+        <li>Que cada persona se observe y tome conciencia de sus hábitos de alimentación, hidratación, descanso y actividad física.</li>
+        <li>Que vea su evolución (resumen semanal y curva de peso) para sostener la motivación.</li>
+        <li>Que llegue a cada control con información ordenada para conversar con su nutricionista.</li>
+        <li>Que tenga ideas prácticas de comidas mediterráneas para el día a día.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 3. CÓMO FUNCIONA -->
+<section id="como" class="no-print" aria-labelledby="t-como">
+  <div class="wrap">
+    <h2 id="t-como">Cómo funciona</h2>
+    <div class="grid g3">
+      <div class="card"><span class="num">1</span><h3>Registrá tu día</h3><p>Marcá lo que hiciste: comidas, agua, descanso, fruta, actividad física y cómo te sentiste. Lleva un minuto.</p></div>
+      <div class="card"><span class="num">2</span><h3>Mirá tu resumen</h3><p>Ves tu cumplimiento del día y de la semana, hábito por hábito, con un mensaje de ánimo.</p></div>
+      <div class="card"><span class="num">3</span><h3>Mostralo en tu control</h3><p>En la consulta abrís tu resumen y tu curva de peso, y lo revisan juntos con tu nutricionista.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 y 5. CARACTERÍSTICAS Y BENEFICIOS -->
+<section class="alt no-print" aria-labelledby="t-car">
+  <div class="wrap">
+    <h2 id="t-car">Qué incluye</h2>
+    <div class="grid g3">
+      <div class="card"><span class="ico" aria-hidden="true">📝</span><h3>Registro diario</h3><p>Desayuno, almuerzo, merienda y cena, agua, descanso, evacuación, fruta, verduras, actividad física y ánimo.</p></div>
+      <div class="card"><span class="ico" aria-hidden="true">📊</span><h3>Resumen diario y semanal</h3><p>Porcentaje de cumplimiento y barras por hábito para ver en qué venís bien y qué podés reforzar.</p></div>
+      <div class="card"><span class="ico" aria-hidden="true">📈</span><h3>Curva de peso</h3><p>Cargás tu peso en cada control y ves tu evolución junto a tu peso objetivo.</p></div>
+      <div class="card"><span class="ico" aria-hidden="true">🎯</span><h3>Mis objetivos</h3><p>Definí tu peso meta y los hábitos que querés trabajar, y mirá cuánto avanzaste.</p></div>
+      <div class="card"><span class="ico" aria-hidden="true">🥗</span><h3>Recetas mediterráneas</h3><p>Ideas simples con ingredientes fáciles de conseguir y el paso a paso para prepararlas.</p></div>
+      <div class="card"><span class="ico" aria-hidden="true">🩺</span><h3>Vista para tu consulta</h3><p>Una pantalla limpia con todo tu resumen, lista para mostrar, imprimir o guardar en PDF.</p></div>
+      <div class="card"><span class="ico" aria-hidden="true">🛒</span><h3>Lista de compras</h3><p>Armá tu lista semanal por grupos de alimentos y enviala por WhatsApp.</p></div>
+      <div class="card"><span class="ico" aria-hidden="true">🏷️</span><h3>Leer etiquetas</h3><p>Aprendé a interpretar los sellos negros, la tabla nutricional y los ingredientes.</p></div>
+      <div class="card"><span class="ico" aria-hidden="true">🎮</span><h3>Juegos para repasar</h3><p>Armá el plato, verdad o mito, duelo de productos y preguntas rápidas.</p></div>
+    </div>
+    <h3 style="margin-top:34px">Beneficios</h3>
+    <div class="grid g2">
+      <div class="card"><strong>Para vos</strong><p>Más constancia, más conciencia de tus hábitos y la motivación de ver tu progreso.</p></div>
+      <div class="card"><strong>Para el equipo de salud</strong><p>Información ordenada para dialogar en cada control y ajustar el acompañamiento.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- HERRAMIENTA INTERACTIVA -->
+<section id="herramienta" aria-labelledby="t-her">
+  <div class="wrap">
+    <h2 id="t-her" class="no-print">Mi registro</h2>
+    <p class="no-print">Tus datos se guardan solo en este celular o computadora. No se envían a ningún lado.</p>
+
+    <div class="tabs" role="tablist" aria-label="Secciones de mi registro">
+      <button class="tab" role="tab" id="tab-hoy" aria-controls="p-hoy" aria-selected="true">📝 Mi día</button>
+      <button class="tab" role="tab" id="tab-semana" aria-controls="p-semana" aria-selected="false" tabindex="-1">📊 Mi semana</button>
+      <button class="tab" role="tab" id="tab-peso" aria-controls="p-peso" aria-selected="false" tabindex="-1">⚖️ Peso y objetivos</button>
+      <button class="tab" role="tab" id="tab-consulta" aria-controls="p-consulta" aria-selected="false" tabindex="-1">🩺 Mostrar en mi consulta</button>
+    </div>
+
+    <!-- MI DÍA -->
+    <div class="panel" role="tabpanel" id="p-hoy" aria-labelledby="tab-hoy">
+      <div class="fila dos">
+        <div>
+          <label class="campo" for="fecha">Día que estoy registrando</label>
+          <input type="date" id="fecha">
+        </div>
+        <div style="align-self:end"><p class="estado" id="estado" role="status" aria-live="polite"></p></div>
+      </div>
+
+      <div class="resumen-dia" aria-live="polite">
+        <div id="dia-texto"></div>
+        <div class="progreso" role="progressbar" aria-label="Cumplimiento del día" aria-valuemin="0" aria-valuemax="100" id="dia-barra-rol"><div id="dia-barra" style="width:0%"></div></div>
+      </div>
+
+      <details class="elegir">
+        <summary>⚙️ Elegir qué hábitos quiero registrar</summary>
+        <p style="margin:10px 0 0">Marcá solo los que querés anotar todos los días. Podés cambiarlo cuando quieras y tus registros anteriores no se pierden.</p>
+        <div class="checks" id="cfg-habitos"></div>
+      </details>
+
+      <form id="form-dia" onsubmit="return false">
+        <fieldset>
+          <legend>Mis comidas de hoy</legend>
+          <div class="checks" id="g-comidas"></div>
+        </fieldset>
+        <fieldset>
+          <legend>Cómo comí</legend>
+          <div class="checks" id="g-alim"></div>
+        </fieldset>
+        <fieldset>
+          <legend>Cuerpo y descanso</legend>
+          <div class="checks" id="g-cuerpo"></div>
+          <div style="margin-top:14px" id="g-contadores"></div>
+          <p class="campo" style="margin-top:14px" id="lbl-calidad">¿Cómo descansé?</p>
+          <div class="opciones" role="radiogroup" aria-labelledby="lbl-calidad" id="g-calidad"></div>
+        </fieldset>
+        <fieldset>
+          <legend>Cómo me sentí</legend>
+          <div class="opciones" role="radiogroup" aria-label="Estado de ánimo" id="g-animo"></div>
+        </fieldset>
+        <label class="campo" for="nota">Algo que quiero contarle a mi nutricionista</label>
+        <textarea id="nota" placeholder="Por ejemplo: tuve un cumpleaños, me costó tomar agua, me sentí con mucha energía…"></textarea>
+      </form>
+    </div>
+
+    <!-- MI SEMANA -->
+    <div class="panel" role="tabpanel" id="p-semana" aria-labelledby="tab-semana" hidden>
+      <h3>Mis últimos 7 días</h3>
+      <div id="semana-contenido"></div>
+    </div>
+
+    <!-- PESO Y OBJETIVOS -->
+    <div class="panel" role="tabpanel" id="p-peso" aria-labelledby="tab-peso" hidden>
+      <h3>Mi curva de peso</h3>
+      <div id="peso-grafico"></div>
+      <div id="peso-kpis" class="kpis"></div>
+
+      <form id="form-peso" class="fila dos" onsubmit="return false" style="margin-top:18px">
+        <div><label class="campo" for="peso-fecha">Fecha del control</label><input type="date" id="peso-fecha"></div>
+        <div><label class="campo" for="peso-kg">Peso (kg)</label><input type="number" id="peso-kg" step="0.1" min="20" max="400" inputmode="decimal" placeholder="Ej: 72.5"></div>
+        <div><button class="btn verde" type="submit" id="peso-agregar">Agregar peso</button></div>
+      </form>
+      <div id="peso-lista" class="tabla-scroll"></div>
+
+      <h3 style="margin-top:30px">Mis objetivos</h3>
+      <form id="form-obj" onsubmit="return false">
+        <div class="fila dos">
+          <div><label class="campo" for="obj-peso">Mi peso objetivo (kg)</label><input type="number" id="obj-peso" step="0.1" min="20" max="400" inputmode="decimal"></div>
+        </div>
+        <fieldset>
+          <legend>Hábitos que quiero trabajar (elegí los que quieras)</legend>
+          <div class="checks" id="obj-habitos"></div>
+        </fieldset>
+        <label class="campo" for="obj-texto">Mi objetivo con mis propias palabras</label>
+        <textarea id="obj-texto" placeholder="Por ejemplo: tener más energía, bajar la presión, acompañar a mis hijos…"></textarea>
+        <div class="acciones"><button class="btn" type="submit">Guardar mis objetivos</button><span class="estado" id="estado-obj" role="status" aria-live="polite"></span></div>
+      </form>
+      <div id="obj-progreso" style="margin-top:18px"></div>
+    </div>
+
+    <!-- CONSULTA -->
+    <div class="panel" role="tabpanel" id="p-consulta" aria-labelledby="tab-consulta" hidden>
+      <div class="no-print" style="margin-bottom:14px">
+        <label class="campo" for="nombre">Mi nombre (opcional, solo para mostrar en esta pantalla)</label>
+        <input type="text" id="nombre" autocomplete="name">
+        <div class="acciones">
+          <button class="btn" id="btn-imprimir" type="button">🖨️ Imprimir o guardar como PDF</button>
+        </div>
+      </div>
+      <div id="consulta-contenido"></div>
+    </div>
+
+    <!-- DATOS -->
+    <div class="no-print" style="margin-top:22px">
+      <details>
+        <summary><strong>Mis datos</strong> (copia de seguridad y borrado)</summary>
+        <p>Como tus datos están solo en este dispositivo, si cambiás de teléfono o borrás los datos del navegador se pierden. Podés guardar una copia y volver a cargarla cuando quieras.</p>
+        <div class="acciones">
+          <button class="btn sec chico" type="button" id="btn-export">Descargar mi copia</button>
+          <label class="btn sec chico" for="file-import" style="margin:0">Cargar una copia</label>
+          <input type="file" id="file-import" accept="application/json" style="position:absolute;opacity:0;width:1px;height:1px">
+          <button class="btn peligro chico" type="button" id="btn-borrar">Borrar todos mis datos</button>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- PLATO ALIMENTARIO -->
+<section id="plato" class="no-print" aria-labelledby="t-plato">
+  <div class="wrap">
+    <h2 id="t-plato">🍽️ Mi plato</h2>
+    <p>Así armamos el almuerzo y la cena: mirá cuánto lugar ocupa cada grupo.</p>
+    <div class="plato-grid">
+      <div class="plato2" role="img" aria-label="Plato dividido en tres partes: la mitad son verduras, un cuarto cereales y hortalizas C, y un cuarto carnes y huevo">
+        <div class="pl-verde"><span class="pl-emojis" aria-hidden="true">🥬🥕🍅🥒🥦🫑🧅🍆🥗</span><b>½ plato</b><span>Verduras</span></div>
+        <div class="pl-amarillo"><span class="pl-emojis" aria-hidden="true">🥔🍠🌽🍚🍞</span><b>¼ plato</b><span>Cereales y hortalizas C</span></div>
+        <div class="pl-naranja"><span class="pl-emojis" aria-hidden="true">🍗🥩🐟🥚</span><b>¼ plato</b><span>Carnes y huevo</span></div>
+      </div>
+      <ul class="leyenda">
+        <li style="--c:#2f8040"><b>🥬 Verduras A y B · 400 g por día</b><small>Acelga, lechuga, tomate, zapallito, zanahoria, zapallo…</small></li>
+        <li style="--c:#ebb94d"><b>🌾 Hortalizas C, cereales y pan · 320 g por día</b><small>Papa, batata, choclo, sémola, polenta, arroz, pan.</small></li>
+        <li style="--c:#c9501f"><b>🍗 Carnes · 85 g por día</b><small>Vacuna magra, pollo sin piel o pescado de nuestro mar.</small></li>
+        <li style="--c:#7b3fe4"><b>🍎🥛🫒 Aparte del plato</b><small>Fruta 450 g · lácteos 225 g · aceite crudo 50 g por día.</small></li>
+      </ul>
+    </div>
+    <p class="consejo" style="margin-top:18px">Son cantidades de referencia. Tu nutricionista las ajusta a tu plan y a lo que necesitás vos.</p>
+  </div>
+</section>
+
+<!-- COMPRAS -->
+<section id="compras" class="alt no-print" aria-labelledby="t-compras">
+  <div class="wrap">
+    <h2 id="t-compras">🛒 Mi lista de compras semanal</h2>
+    <p>Tocá los alimentos que querés comprar esta semana y armá tu lista con todos los grupos. Después llevala al súper en el celular o enviala por WhatsApp.</p>
+    <div class="card" style="background:#fff">
+      <h3>1. Elegí tus alimentos</h3>
+      <div id="cmp-grupos"></div>
+      <form id="cmp-form" onsubmit="return false" style="margin-top:6px">
+        <label class="campo" for="cmp-otro">¿Falta algo? Agregalo acá</label>
+        <div class="cmp-add">
+          <input type="text" id="cmp-otro" maxlength="40" placeholder="Ej: cacao amargo">
+          <button class="btn verde" type="submit">Agregar</button>
+        </div>
+      </form>
+    </div>
+    <div class="card" style="background:#fff;margin-top:18px">
+      <h3>2. Mi lista <span id="cmp-cuenta" style="font-weight:500;color:var(--gris);font-size:.95rem"></span></h3>
+      <div id="cmp-lista"></div>
+      <div class="acciones">
+        <button class="btn sec chico" type="button" id="cmp-ejemplo">Cargar un ejemplo</button>
+        <a class="btn verde chico" id="cmp-wsp" href="#" target="_blank" rel="noopener">Enviar por WhatsApp</a>
+        <button class="btn sec chico" type="button" id="cmp-copiar">Copiar lista</button>
+        <button class="btn sec chico" type="button" id="cmp-hechos">Quitar los tildados</button>
+        <button class="btn peligro chico" type="button" id="cmp-vaciar">Vaciar lista</button>
+      </div>
+      <p class="estado" id="cmp-estado" role="status" aria-live="polite"></p>
+    </div>
+    <p class="consejo" style="margin-top:18px"><strong>Consejo:</strong> priorizá las verduras y frutas de estación, comprá con la lista en la mano y evitá ir al súper con hambre. El ejemplo es orientativo: tu plan lo define tu nutricionista.</p>
+  </div>
+</section>
+
+<!-- ETIQUETAS -->
+<section id="etiquetas" class="no-print" aria-labelledby="t-et">
+  <div class="wrap">
+    <h2 id="t-et">🏷️ Aprendé a leer etiquetas</h2>
+    <p>Mirar la etiqueta te ayuda a elegir mejor en el súper. Tocá cada parte de este envase de ejemplo (del 1 al 4) y descubrí qué conviene mirar.</p>
+    <div class="et-grid">
+      <div class="paquete" id="et-paquete">
+        <div class="pk-nombre">Galletitas de ejemplo</div>
+        <button type="button" class="zona" data-z="oct" aria-pressed="false">
+          <span class="zn">1</span><strong>Sellos negros del frente</strong>
+          <span class="octs"><span class="oct">EXCESO EN AZÚCARES</span><span class="oct">EXCESO EN GRASAS SATURADAS</span><span class="oct">EXCESO EN SODIO</span></span>
+        </button>
+        <button type="button" class="zona" data-z="porcion" aria-pressed="false">
+          <span class="zn">2</span><strong>Porción: 30 g (3 galletitas)</strong>
+          <span style="display:block;font-size:.9rem;margin-top:4px">Porciones por envase: 5</span>
+        </button>
+        <button type="button" class="zona" data-z="tabla" aria-pressed="false">
+          <span class="zn">3</span><strong>Información nutricional</strong>
+          <span class="nut">
+            <span class="f"><b></b><b>100 g</b><b>Porción</b></span>
+            <span class="f"><span>Valor energético</span><span>480 kcal</span><span>144 kcal</span></span>
+            <span class="f"><span>Azúcares</span><span>26 g</span><span>7,8 g</span></span>
+            <span class="f"><span>Grasas saturadas</span><span>9 g</span><span>2,7 g</span></span>
+            <span class="f"><span>Sodio</span><span>620 mg</span><span>186 mg</span></span>
+            <span class="f"><span>Fibra</span><span>2 g</span><span>0,6 g</span></span>
+          </span>
+        </button>
+        <button type="button" class="zona" data-z="ing" aria-pressed="false">
+          <span class="zn">4</span><strong>Ingredientes</strong>
+          <span style="display:block;font-size:.9rem;margin-top:4px">Harina de trigo, azúcar, grasa vegetal, jarabe de maíz, sal, aromatizante.</span>
+        </button>
+      </div>
+      <div class="et-info" id="et-info" role="status" aria-live="polite">
+        <strong>👆 Tocá una parte del envase</strong>
+        <p>Acá te cuento qué significa cada parte y cómo usarla para elegir mejor.</p>
+      </div>
+    </div>
+    <p class="consejo" style="margin-top:16px">Los valores de este envase son un ejemplo para aprender y no corresponden a ninguna marca real.</p>
+
+    <h3 style="margin-top:32px">⚖️ Duelo de productos: ¿cuál elegís?</h3>
+    <p>Mirá los dos productos y elegí el que conviene más para el día a día. Los datos son de ejemplo.</p>
+    <div class="card" style="background:#fff"><div id="et-juego"></div></div>
+  </div>
+</section>
+
+<!-- JUEGOS -->
+<section id="jugar" class="alt no-print" aria-labelledby="t-jugar">
+  <div class="wrap">
+    <h2 id="t-jugar">🎮 Jugá y aprendé</h2>
+    <p>Probá cuánto recordás de lo que conversamos en la consulta. No tiene nota: es para practicar.</p>
+    <div class="grid g2">
+      <div class="card juego">
+        <h3>🍽️ Armá el plato</h3>
+        <p style="font-size:.95rem">Mirá cada alimento y elegí dónde va.</p>
+        <div id="j1" class="juego-area"></div>
+      </div>
+      <div class="card juego">
+        <h3>❓ Preguntas rápidas</h3>
+        <p style="font-size:.95rem">Elegí la respuesta correcta.</p>
+        <div id="j2" class="juego-area"></div>
+      </div>
+      <div class="card juego">
+        <h3>🧐 ¿Verdad o mito?</h3>
+        <p style="font-size:.95rem">Decidí si cada afirmación es verdadera o un mito.</p>
+        <div id="j3" class="juego-area"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CALCULADORA IMC -->
+<section id="imc" class="no-print" aria-labelledby="t-imc">
+  <div class="wrap">
+    <h2 id="t-imc">🧮 Calculadora de IMC</h2>
+    <p>El índice de masa corporal (IMC) relaciona tu peso con tu altura. Es solo una referencia general para personas adultas.</p>
+    <div class="card">
+      <form id="form-imc" onsubmit="return false">
+        <div class="fila dos">
+          <div><label class="campo" for="imc-peso">Peso (kg)</label><input type="number" id="imc-peso" step="0.1" min="20" max="400" inputmode="decimal" placeholder="Ej: 72.5"></div>
+          <div><label class="campo" for="imc-talla">Altura (cm)</label><input type="number" id="imc-talla" step="1" min="100" max="230" inputmode="numeric" placeholder="Ej: 165"></div>
+        </div>
+        <div class="acciones">
+          <button class="btn" type="submit">Calcular</button>
+          <button class="btn sec" type="button" id="imc-ultimo">Usar mi último peso registrado</button>
+        </div>
+      </form>
+      <div id="imc-res" aria-live="polite" style="margin-top:18px"></div>
+    </div>
+    <p class="aviso" style="margin-top:16px">El IMC es una referencia y no un diagnóstico: no distingue masa muscular de grasa y no se interpreta igual en embarazadas, menores de 18 años ni adultos mayores. Tu nutricionista lo analiza junto con otras mediciones.</p>
+  </div>
+</section>
+
+<!-- 6. RECETAS -->
+<section id="recetas" class="alt no-print" aria-labelledby="t-rec">
+  <div class="wrap">
+    <h2 id="t-rec">Recetas coloridas para probar</h2>
+    <p>Ideas simples, económicas y con ingredientes que se consiguen en Tierra del Fuego. Las cantidades y la frecuencia deben ajustarse al plan que te indicó tu nutricionista.</p>
+
+    <details class="receta">
+      <summary>🍪 Galletas de avena y banana <span class="etiqueta">Merienda</span> <span class="etiqueta">25 min</span> <span class="etiqueta">12 galletas</span></summary>
+      <div class="receta-cuerpo">
+        <p><strong>Ingredientes</strong></p>
+        <ul><li>2 bananas bien maduras</li><li>1 y 1/2 taza de avena arrollada</li><li>1/4 taza de pasas de uva o arándanos secos</li><li>2 cucharadas de nueces picadas</li><li>1 cucharadita de canela</li><li>1 cucharadita de esencia de vainilla (opcional)</li></ul>
+        <p><strong>Procedimiento</strong></p>
+        <ol><li>Precalentá el horno a 180 °C y cubrí una placa con papel manteca.</li><li>Pisá las bananas con un tenedor hasta formar un puré.</li><li>Sumá la avena, las pasas, las nueces, la canela y la vainilla. Mezclá bien y dejá reposar 5 minutos para que la avena absorba la humedad.</li><li>Con una cuchara, armá 12 montoncitos sobre la placa y aplastalos apenas.</li><li>Horneá 15 a 18 minutos, hasta que estén doraditas. Dejalas enfriar antes de despegarlas.</li></ol>
+        <p class="consejo"><strong>Consejo:</strong> el dulzor viene de las bananas maduras, por eso no necesitan azúcar agregada. Se conservan 3 a 4 días en un frasco cerrado.</p>
+      </div>
+    </details>
+
+    <details class="receta">
+      <summary>🍊 Budín de naranja <span class="etiqueta">Desayuno / merienda</span> <span class="etiqueta">50 min</span> <span class="etiqueta">8 porciones</span></summary>
+      <div class="receta-cuerpo">
+        <p><strong>Ingredientes</strong></p>
+        <ul><li>3 huevos</li><li>1 naranja grande (el jugo y la ralladura de la parte naranja)</li><li>1/3 taza de aceite de girasol u oliva suave</li><li>1/2 taza de yogur natural</li><li>2 cucharadas de azúcar o edulcorante apto para horno, según te indique tu nutricionista</li><li>1 y 1/2 taza de harina integral</li><li>1 cucharada de polvo de hornear</li></ul>
+        <p><strong>Procedimiento</strong></p>
+        <ol><li>Precalentá el horno a 180 °C y aceitá un molde de budín.</li><li>Batí los huevos con el azúcar o edulcorante hasta que estén espumosos.</li><li>Agregá el aceite, el yogur, el jugo y la ralladura de naranja, y mezclá.</li><li>Tamizá la harina con el polvo de hornear e incorporala con movimientos suaves y envolventes, sin batir de más.</li><li>Volcá en el molde y horneá 35 a 40 minutos. Está listo cuando un palillo sale limpio.</li></ol>
+        <p class="consejo"><strong>Consejo:</strong> rallá solo la parte naranja de la cáscara; la parte blanca es amarga.</p>
+      </div>
+    </details>
+
+    <details class="receta">
+      <summary>🥜 Granola casera <span class="etiqueta">Desayuno / merienda</span> <span class="etiqueta">40 min</span> <span class="etiqueta">10 porciones</span></summary>
+      <div class="receta-cuerpo">
+        <p><strong>Ingredientes</strong></p>
+        <ul><li>3 tazas de avena arrollada</li><li>1/2 taza de almendras o nueces picadas</li><li>1/4 taza de semillas de girasol o de zapallo</li><li>1/4 taza de coco rallado</li><li>3 cucharadas de aceite de oliva suave o de girasol</li><li>3 cucharadas de miel</li><li>1 cucharadita de canela</li><li>1/3 taza de pasas de uva</li></ul>
+        <p><strong>Procedimiento</strong></p>
+        <ol><li>Precalentá el horno a 160 °C y cubrí una placa grande con papel manteca.</li><li>Mezclá en un bowl la avena, los frutos secos, las semillas, el coco y la canela.</li><li>Calentá apenas el aceite con la miel y volcalo sobre los secos. Mezclá hasta que todo quede humedecido.</li><li>Extendé en la placa en una capa fina y horneá 25 a 30 minutos, revolviendo cada 10 minutos para que dore parejo.</li><li>Dejá enfriar por completo: se vuelve crocante al enfriarse. Agregá las pasas y guardá en un frasco hermético.</li></ol>
+        <p class="consejo"><strong>Consejo:</strong> es una preparación concentrada, por eso conviene servirla en porciones chicas (3 o 4 cucharadas) sobre yogur con fruta fresca.</p>
+      </div>
+    </details>
+
+    <details class="receta">
+      <summary>🥣 Avena cremosa con frutas y nueces <span class="etiqueta">Desayuno / merienda</span> <span class="etiqueta">10 min</span> <span class="etiqueta">2 porciones</span></summary>
+      <div class="receta-cuerpo">
+        <p><strong>Ingredientes</strong></p>
+        <ul><li>1 taza de avena arrollada</li><li>2 tazas de leche (o bebida vegetal)</li><li>1 banana madura</li><li>1 manzana</li><li>2 cucharadas de nueces picadas</li><li>Canela a gusto</li></ul>
+        <p><strong>Procedimiento</strong></p>
+        <ol><li>Poné la avena y la leche en una cacerola a fuego bajo.</li><li>Revolvé durante 5 a 7 minutos, hasta que espese y quede cremosa.</li><li>Cortá la manzana en cubitos y pisá la mitad de la banana; sumala a la avena y mezclá.</li><li>Serví en dos bowls con el resto de la banana en rodajas, las nueces y la canela.</li></ol>
+        <p class="consejo"><strong>Consejo:</strong> podés dejar la avena remojada en la leche desde la noche y comerla fría a la mañana.</p>
+      </div>
+    </details>
+
+    <details class="receta">
+      <summary>🍅 Tostadas con tomate, aceite de oliva y huevo <span class="etiqueta">Desayuno / merienda</span> <span class="etiqueta">10 min</span> <span class="etiqueta">2 porciones</span></summary>
+      <div class="receta-cuerpo">
+        <p><strong>Ingredientes</strong></p>
+        <ul><li>4 rebanadas de pan integral</li><li>2 tomates maduros</li><li>2 huevos</li><li>1 cucharadita de aceite de oliva</li><li>Orégano y pimienta a gusto</li></ul>
+        <p><strong>Procedimiento</strong></p>
+        <ol><li>Hervé los huevos 9 minutos, enfriá con agua fría y pelalos.</li><li>Tostá el pan hasta que quede dorado.</li><li>Rallá los tomates con un poco de sal y repartí la pulpa sobre cada tostada.</li><li>Agregá el huevo en rodajas, un hilo de aceite de oliva, orégano y pimienta.</li></ol>
+        <p class="consejo"><strong>Consejo:</strong> el tomate rallado reemplaza a los untables y le da jugosidad al pan.</p>
+      </div>
+    </details>
+
+    <details class="receta">
+      <summary>🥗 Ensalada tibia de lentejas <span class="etiqueta">Almuerzo</span> <span class="etiqueta">30 min</span> <span class="etiqueta">4 porciones</span></summary>
+      <div class="receta-cuerpo">
+        <p><strong>Ingredientes</strong></p>
+        <ul><li>1 taza de lentejas secas (o 2 tazas ya cocidas)</li><li>1 zanahoria</li><li>1 cebolla morada chica</li><li>1 morrón rojo</li><li>Perejil fresco picado</li><li>3 cucharadas de aceite de oliva</li><li>Jugo de 1 limón</li><li>Sal y pimienta a gusto</li></ul>
+        <p><strong>Procedimiento</strong></p>
+        <ol><li>Enjuagá las lentejas y hervilas 20 minutos en agua, hasta que estén tiernas pero enteras. Colá.</li><li>Cortá la zanahoria, la cebolla y el morrón en cubitos pequeños.</li><li>Mezclá las lentejas aún tibias con las verduras y el perejil.</li><li>Aliñá con el aceite, el limón, sal y pimienta. Dejá reposar 10 minutos antes de servir.</li></ol>
+        <p class="consejo"><strong>Consejo:</strong> las lentejas de lata, bien enjuagadas, ahorran tiempo y sirven igual.</p>
+      </div>
+    </details>
+
+    <details class="receta">
+      <summary>🐟 Merluza al horno con verduras <span class="etiqueta">Cena</span> <span class="etiqueta">40 min</span> <span class="etiqueta">4 porciones</span></summary>
+      <div class="receta-cuerpo">
+        <p><strong>Ingredientes</strong></p>
+        <ul><li>4 filetes de merluza</li><li>2 papas medianas</li><li>1 zucchini</li><li>2 tomates</li><li>1 cebolla</li><li>2 dientes de ajo</li><li>3 cucharadas de aceite de oliva</li><li>1 limón y orégano</li></ul>
+        <p><strong>Procedimiento</strong></p>
+        <ol><li>Precalentá el horno a 200 °C.</li><li>Cortá las papas, el zucchini, el tomate y la cebolla en rodajas finas y acomodalas en una fuente con la mitad del aceite, el ajo picado, sal y orégano.</li><li>Horneá las verduras 15 minutos.</li><li>Poné los filetes encima, rociá con limón y el resto del aceite, y horneá 12 a 15 minutos más, hasta que el pescado se desmenuce fácilmente.</li></ol>
+        <p class="consejo"><strong>Consejo:</strong> también podés usar otros pescados blancos o de estación que tengas a mano.</p>
+      </div>
+    </details>
+
+    <details class="receta">
+      <summary>🥚 Tortilla de verduras al horno <span class="etiqueta">Almuerzo / cena</span> <span class="etiqueta">35 min</span> <span class="etiqueta">4 porciones</span></summary>
+      <div class="receta-cuerpo">
+        <p><strong>Ingredientes</strong></p>
+        <ul><li>6 huevos</li><li>2 zucchinis (o 1 atado de espinaca)</li><li>1 cebolla</li><li>1 zanahoria rallada</li><li>1 cucharada de aceite de oliva</li><li>Sal, pimienta y nuez moscada</li></ul>
+        <p><strong>Procedimiento</strong></p>
+        <ol><li>Precalentá el horno a 180 °C y aceitá apenas una fuente.</li><li>Salteá la cebolla picada y el zucchini en cubitos 5 minutos, hasta que se ablanden.</li><li>Batí los huevos con sal, pimienta y un toque de nuez moscada. Sumá las verduras y la zanahoria.</li><li>Volcá en la fuente y horneá 20 a 25 minutos, hasta que cuaje y se dore.</li></ol>
+        <p class="consejo"><strong>Consejo:</strong> queda muy bien fría el día siguiente para llevar al trabajo.</p>
+      </div>
+    </details>
+
+    <details class="receta">
+      <summary>🫘 Garbanzos con espinaca y tomate <span class="etiqueta">Almuerzo / cena</span> <span class="etiqueta">25 min</span> <span class="etiqueta">4 porciones</span></summary>
+      <div class="receta-cuerpo">
+        <p><strong>Ingredientes</strong></p>
+        <ul><li>2 tazas de garbanzos cocidos</li><li>1 atado de espinaca o acelga</li><li>1 cebolla</li><li>2 dientes de ajo</li><li>2 tomates (o 1 lata de tomate triturado)</li><li>1 cucharada de aceite de oliva</li><li>Pimentón o comino, y limón</li></ul>
+        <p><strong>Procedimiento</strong></p>
+        <ol><li>En una olla, rehogá la cebolla y el ajo picados en el aceite 5 minutos.</li><li>Agregá el tomate y el pimentón, y cociná 8 minutos a fuego medio.</li><li>Sumá los garbanzos y cociná 5 minutos más.</li><li>Incorporá la espinaca picada, tapá 3 minutos hasta que se achique, y terminá con unas gotas de limón.</li></ol>
+        <p class="consejo"><strong>Consejo:</strong> es un plato completo que mejora al día siguiente, ideal para dejar hecho.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- 7. PRIVACIDAD Y AVISO -->
+<section id="privacidad" class="no-print" aria-labelledby="t-priv">
+  <div class="wrap">
+    <h2 id="t-priv">Privacidad y aviso importante</h2>
+    <div class="grid g2">
+      <div class="card">
+        <h3>🔒 Tus datos son tuyos</h3>
+        <p>Lo que registrás se guarda únicamente en el navegador de este dispositivo. No hay cuentas, ni servidores, ni envío de información. Por eso conviene descargar una copia de vez en cuando y no usar un dispositivo compartido.</p>
+      </div>
+      <div class="aviso">
+        <h3 style="color:#7c2d12">Aviso de uso</h3>
+        <p style="margin:0">Esta herramienta es un complemento educativo y de acompañamiento. <strong>No reemplaza la consulta profesional.</strong> Tu plan alimentario lo indica el equipo de nutrición del hospital. Ante cualquier duda o síntoma, consultá con tu profesional.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. CONTACTO -->
+<section id="contacto" class="alt no-print" aria-labelledby="t-con">
+  <div class="wrap">
+    <h2 id="t-con">Contacto</h2>
+    <p>Para consultas sobre tu seguimiento, hablá con tu nutricionista en tu próximo control o acercate al <strong>Servicio de Nutrición del Hospital Regional Río Grande</strong>.</p>
+    <!-- Agregar acá: correo, teléfono o días y horarios de atención del servicio -->
+    <!-- OPCIONAL: "Quién te acompaña" (solo con autorización de la jefatura)
+    <div class="card" style="display:flex;gap:16px;align-items:center;margin-top:16px">
+      <img src="img/nutricionista.jpg" alt="Nutricionista del Servicio" style="width:96px;height:96px;border-radius:50%;object-fit:cover">
+      <div><strong>Lic. [Nombre y apellido]</strong><br>Nutricionista · Matrícula [N.º]<br>Servicio de Nutrición, Hospital Regional Río Grande</div>
+    </div>
+    -->
+  </div>
+</section>
+</main>
+
+<footer class="no-print">
+  <div class="wrap">
+    <div>
+      <strong>Hospital Regional Río Grande · Servicio de Nutrición</strong><br>
+      Río Grande, Tierra del Fuego, Argentina
+    </div>
+    <div>Herramienta educativa de acompañamiento. No reemplaza la consulta profesional.</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+'use strict';
+
+/* ---------- Configuración de hábitos ---------- */
+var KEY='registroNutricional_hrgrg_v1';
+var META={agua:8,sueno:7,actividad:30};
+var BOOL=[
+  ['desayuno','Hice el desayuno'],['almuerzo','Hice el almuerzo'],['merienda','Hice la merienda'],['cena','Hice la cena'],
+  ['fruta','Comí fruta'],['verdura','Comí verduras'],['ultra','Evité ultraprocesados y bebidas azucaradas'],
+  ['picoteo','No comí entre horas fuera de las comidas'],['pantallas','Comí sin pantallas y despacio'],['evac','Fui de cuerpo']
+];
+var NUM=[
+  {id:'agua',label:'Agua',unidad:'vasos',paso:1,max:30,meta:'Meta: 8 vasos',habito:'Tomé suficiente agua (8 vasos)'},
+  {id:'sueno',label:'Horas de sueño',unidad:'h',paso:0.5,max:16,meta:'Meta: 7 horas o más',habito:'Dormí 7 horas o más'},
+  {id:'actividad',label:'Actividad física',unidad:'min',paso:10,max:600,meta:'Meta: 30 minutos o más',habito:'Hice 30 minutos o más de actividad'}
+];
+var HABITOS=BOOL.map(function(b){return {id:b[0],label:b[1]};}).concat(NUM.map(function(n){return {id:n.id,label:n.habito};}));
+function activos(){
+  var a=S.config&&S.config.activos;
+  if(!Array.isArray(a)||!a.length)return HABITOS;
+  var f=HABITOS.filter(function(h){return a.indexOf(h.id)>-1;});
+  return f.length?f:HABITOS;
+}
+function esActivo(id){return activos().some(function(h){return h.id===id;});}
+var CALIDAD=[[1,'Mal'],[2,'Regular'],[3,'Bien']];
+var CARAS=[[1,'😞','Muy mal'],[2,'🙁','Mal'],[3,'😐','Normal'],[4,'🙂','Bien'],[5,'😄','Muy bien']];
+
+/* ---------- Estado ---------- */
+var S=cargar();
+function vacio(){return {entries:{},weights:[],goals:{},nombre:'',config:{},compras:{items:[]}};}
+function cargar(){
+  try{
+    var r=JSON.parse(localStorage.getItem(KEY));
+    if(r&&typeof r==='object'){var v=vacio();for(var k in v){if(r[k]!==undefined)v[k]=r[k];}return v;}
+  }catch(e){}
+  return vacio();
+}
+function guardar(msg,destino){
+  try{localStorage.setItem(KEY,JSON.stringify(S));estado(msg||'Guardado en este dispositivo ✓',destino);}
+  catch(e){estado('No se pudo guardar. Revisá que el navegador permita guardar datos.',destino);}
+}
+var tEstado;
+function estado(t,destino){
+  var el=document.getElementById(destino||'estado');if(!el)return;
+  el.textContent=t;clearTimeout(tEstado);tEstado=setTimeout(function(){el.textContent='';},2500);
+}
+
+/* ---------- Utilidades ---------- */
+function $(id){return document.getElementById(id);}
+function iso(d){var m=d.getMonth()+1,dd=d.getDate();return d.getFullYear()+'-'+(m<10?'0':'')+m+'-'+(dd<10?'0':'')+dd;}
+function parse(s){var p=s.split('-');return new Date(+p[0],+p[1]-1,+p[2]);}
+function fmt(s,largo){
+  return parse(s).toLocaleDateString('es-AR',largo?{weekday:'long',day:'numeric',month:'long'}:{day:'numeric',month:'short'});
+}
+function esc(t){return String(t).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function hoy(){return iso(new Date());}
+function ultimosDias(n){var out=[],d=new Date();for(var i=n-1;i>=0;i--){var x=new Date(d.getFullYear(),d.getMonth(),d.getDate()-i);out.push(iso(x));}return out;}
+function cumple(e,id){
+  if(!e)return false;
+  if(META[id]!==undefined)return (+e[id]||0)>=META[id];
+  return !!e[id];
+}
+function pctDia(e){
+  var ac=activos(),n=0;
+  if(e)ac.forEach(function(h){if(cumple(e,h.id))n++;});
+  return {n:n,total:ac.length,pct:Math.round(n/ac.length*100)};
+}
+function tieneRegistro(e){
+  if(!e)return false;
+  for(var k in e){if(e[k]!==''&&e[k]!==false&&e[k]!==0&&e[k]!==undefined&&e[k]!==null)return true;}
+  return false;
+}
+
+/* ---------- Pestañas ---------- */
+var tabs=['hoy','semana','peso','consulta'];
+function mostrarTab(nombre,foco){
+  tabs.forEach(function(t){
+    var sel=t===nombre;
+    $('tab-'+t).setAttribute('aria-selected',sel);
+    $('tab-'+t).tabIndex=sel?0:-1;
+    $('p-'+t).hidden=!sel;
+  });
+  if(nombre==='semana')renderSemana();
+  if(nombre==='peso')renderPeso();
+  if(nombre==='consulta')renderConsulta();
+  if(foco)$('tab-'+nombre).focus();
+}
+tabs.forEach(function(t,i){
+  $('tab-'+t).addEventListener('click',function(){mostrarTab(t);});
+  $('tab-'+t).addEventListener('keydown',function(ev){
+    var j=null;
+    if(ev.key==='ArrowRight')j=(i+1)%tabs.length;
+    if(ev.key==='ArrowLeft')j=(i-1+tabs.length)%tabs.length;
+    if(j!==null){ev.preventDefault();mostrarTab(tabs[j],true);}
+  });
+});
+
+/* ---------- MI DÍA ---------- */
+var fechaAct=hoy();
+function checkHTML(id,label,marcado){
+  return '<label class="check"><input type="checkbox" data-bool="'+id+'"'+(marcado?' checked':'')+'><span>'+esc(label)+'</span></label>';
+}
+function renderForm(){
+  var e=S.entries[fechaAct]||{};
+  function grupo(ids){return ids.filter(esActivo).map(function(id){var b=BOOL.filter(function(x){return x[0]===id;})[0];return checkHTML(id,b[1],e[id]);}).join('');}
+  $('g-comidas').innerHTML=grupo(['desayuno','almuerzo','merienda','cena']);
+  $('g-alim').innerHTML=grupo(['fruta','verdura','ultra','picoteo','pantallas']);
+  $('g-comidas').parentNode.hidden=!$('g-comidas').innerHTML;
+  $('g-alim').parentNode.hidden=!$('g-alim').innerHTML;
+  $('g-cuerpo').innerHTML=grupo(['evac']);
+  $('g-contadores').innerHTML=NUM.filter(function(n){return esActivo(n.id);}).map(function(n){
+    var v=e[n.id]||0;
+    return '<div class="contador"><div><strong>'+n.label+'</strong><small>'+n.meta+'</small></div>'+
+      '<div class="ctl"><button type="button" data-num="'+n.id+'" data-d="-1" aria-label="Restar '+n.label+'">−</button>'+
+      '<output id="out-'+n.id+'" aria-live="polite">'+v+' '+n.unidad+'</output>'+
+      '<button type="button" data-num="'+n.id+'" data-d="1" aria-label="Sumar '+n.label+'">+</button></div></div>';
+  }).join('');
+  $('g-calidad').innerHTML=CALIDAD.map(function(c){
+    return '<label class="opcion"><input type="radio" name="calidad" value="'+c[0]+'"'+(e.calidad===c[0]?' checked':'')+'><span>'+c[1]+'</span></label>';
+  }).join('');
+  $('g-animo').innerHTML=CARAS.map(function(c){
+    return '<label class="opcion cara"><input type="radio" name="animo" value="'+c[0]+'"'+(e.animo===c[0]?' checked':'')+'><span aria-hidden="true">'+c[1]+'</span><span class="sr" style="position:absolute;left:-999px">'+c[2]+'</span></label>';
+  }).join('');
+  $('nota').value=e.nota||'';
+  resumenDia();
+  renderConfig();
+}
+function renderConfig(){
+  var el=$('cfg-habitos');if(!el)return;
+  el.innerHTML=HABITOS.map(function(h){return '<label class="check"><input type="checkbox" data-cfg="'+h.id+'"'+(esActivo(h.id)?' checked':'')+'><span>'+esc(h.label)+'</span></label>';}).join('');
+}
+$('cfg-habitos').addEventListener('change',function(ev){
+  var t=ev.target;if(!t.dataset.cfg)return;
+  var sel=[].slice.call(document.querySelectorAll('[data-cfg]:checked')).map(function(c){return c.dataset.cfg;});
+  if(!sel.length){t.checked=true;alert('Elegí al menos un hábito para registrar.');return;}
+  S.config=S.config||{};
+  S.config.activos=sel.length===HABITOS.length?[]:sel;
+  guardar('Hábitos actualizados ✓');
+  renderForm();
+});
+function resumenDia(){
+  var e=S.entries[fechaAct];var r=pctDia(e);
+  var esHoy=fechaAct===hoy();
+  $('dia-texto').innerHTML='<strong>'+r.pct+'%</strong> de mis hábitos cumplidos '+(esHoy?'hoy':'ese día')+' <span style="color:#52626f">('+r.n+' de '+r.total+')</span>';
+  $('dia-barra').style.width=r.pct+'%';
+  $('dia-barra-rol').setAttribute('aria-valuenow',r.pct);
+}
+function entrada(){return (S.entries[fechaAct]=S.entries[fechaAct]||{});}
+$('form-dia').addEventListener('change',function(ev){
+  var t=ev.target;
+  if(t.dataset.bool){entrada()[t.dataset.bool]=t.checked;}
+  else if(t.name==='calidad'){entrada().calidad=+t.value;}
+  else if(t.name==='animo'){entrada().animo=+t.value;}
+  else return;
+  guardar();resumenDia();
+});
+$('form-dia').addEventListener('click',function(ev){
+  var b=ev.target.closest('button[data-num]');if(!b)return;
+  var n=NUM.filter(function(x){return x.id===b.dataset.num;})[0];
+  var e=entrada();var v=(+e[n.id]||0)+(+b.dataset.d)*n.paso;
+  v=Math.max(0,Math.min(n.max,Math.round(v*10)/10));
+  e[n.id]=v;$('out-'+n.id).textContent=v+' '+n.unidad;
+  guardar();resumenDia();
+});
+$('nota').addEventListener('input',function(){entrada().nota=$('nota').value;guardar();});
+$('fecha').max=hoy();$('fecha').value=fechaAct;
+$('fecha').addEventListener('change',function(){
+  var v=$('fecha').value;
+  if(!v)return;
+  if(v>hoy()){v=hoy();$('fecha').value=v;}
+  fechaAct=v;renderForm();
+});
+
+/* ---------- MI SEMANA ---------- */
+function mensajeSemana(prom,dias){
+  if(!dias)return 'Todavía no hay registros esta semana. ¡Empezar es lo más importante! Con un día registrado ya arrancás.';
+  if(prom>=80)return '¡Excelente semana! Tu constancia se nota. Seguí así y contale a tu nutricionista qué te ayudó.';
+  if(prom>=55)return '¡Muy buen camino! Ya tenés una base sólida. Elegí un hábito para reforzar esta semana.';
+  if(prom>=30)return 'Vas avanzando. Cada día registrado cuenta. Probá empezar por un solo hábito que te resulte fácil.';
+  return 'Retomar es parte del proceso. No hace falta hacerlo perfecto: elegí un hábito y empezá por ahí.';
+}
+function renderSemana(){
+  var dias=ultimosDias(7);var reg=0,suma=0;
+  dias.forEach(function(d){var e=S.entries[d];if(tieneRegistro(e)){reg++;suma+=pctDia(e).pct;}});
+  var prom=reg?Math.round(suma/reg):0;
+  var trabajar=S.goals.habitos||[];
+  var h='<div class="kpis"><div class="kpi"><b>'+reg+' de 7</b><span>días registrados</span></div><div class="kpi"><b>'+prom+'%</b><span>cumplimiento promedio</span></div></div>';
+  h+='<div class="msg">'+esc(mensajeSemana(prom,reg))+'</div>';
+  h+='<h3>Días cumplidos por hábito</h3>';
+  activos().forEach(function(hb){
+    var c=0;dias.forEach(function(d){if(cumple(S.entries[d],hb.id))c++;});
+    var star=trabajar.indexOf(hb.id)>-1?' <span class="meta-star" title="Hábito que quiero trabajar">★</span>':'';
+    h+='<div class="barra-h"><span>'+esc(hb.label)+star+'</span><div class="progreso" role="img" aria-label="'+c+' de 7 días"><div style="width:'+(c/7*100)+'%"></div></div><strong>'+c+'/7</strong></div>';
+  });
+  if(trabajar.length)h+='<p style="margin-top:12px"><span class="meta-star">★</span> Son los hábitos que elegiste trabajar.</p>';
+  $('semana-contenido').innerHTML=h;
+}
+
+/* ---------- PESO Y OBJETIVOS ---------- */
+function pesosOrdenados(){return S.weights.slice().sort(function(a,b){return a.date<b.date?-1:a.date>b.date?1:0;});}
+function graficoPeso(){
+  var pts=pesosOrdenados();var obj=+S.goals.peso||0;
+  if(!pts.length)return '<p class="vacio">Todavía no cargaste ningún peso. Agregá el primero con el formulario de abajo.</p>';
+  var W=640,H=300,L=52,R=20,T=20,B=46;
+  var vals=pts.map(function(p){return p.kg;});if(obj)vals.push(obj);
+  var mn=Math.min.apply(null,vals),mx=Math.max.apply(null,vals);
+  var pad=Math.max(1,(mx-mn)*0.2);mn=Math.floor(mn-pad);mx=Math.ceil(mx+pad);
+  function X(i){return pts.length===1?(L+(W-L-R)/2):L+i*(W-L-R)/(pts.length-1);}
+  function Y(v){return T+(mx-v)/(mx-mn)*(H-T-B);}
+  var s='<svg class="grafico" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Gráfico de línea con la evolución de mi peso'+(obj?' y mi peso objetivo de '+obj+' kilos':'')+'">';
+  for(var i=0;i<=4;i++){
+    var v=mn+(mx-mn)*i/4,y=Y(v);
+    s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y+'" y2="'+y+'" stroke="#e3ecf2"/><text x="'+(L-8)+'" y="'+(y+4)+'" text-anchor="end" font-size="12" fill="#52626f">'+(Math.round(v*10)/10)+'</text>';
+  }
+  if(obj){
+    var yo=Y(obj);
+    s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+yo+'" y2="'+yo+'" stroke="#d0472f" stroke-width="2" stroke-dasharray="7 5"/>';
+    s+='<text x="'+(W-R)+'" y="'+(yo-6)+'" text-anchor="end" font-size="12" font-weight="700" fill="#d0472f">Objetivo: '+obj+' kg</text>';
+  }
+  var path=pts.map(function(p,i){return (i?'L':'M')+X(i)+' '+Y(p.kg);}).join(' ');
+  if(pts.length>1)s+='<path d="'+path+'" fill="none" stroke="#0b7a7a" stroke-width="3" stroke-linejoin="round"/>';
+  var cada=pts.length>8?Math.ceil(pts.length/8):1;
+  pts.forEach(function(p,i){
+    s+='<circle cx="'+X(i)+'" cy="'+Y(p.kg)+'" r="5" fill="#0b7a7a" stroke="#fff" stroke-width="2"/>';
+    if(i%cada===0||i===pts.length-1){
+      s+='<text x="'+X(i)+'" y="'+(Y(p.kg)-12)+'" text-anchor="middle" font-size="12" font-weight="700" fill="#064e4e">'+p.kg+'</text>';
+      s+='<text x="'+X(i)+'" y="'+(H-B+20)+'" text-anchor="middle" font-size="11" fill="#52626f">'+esc(fmt(p.date))+'</text>';
+    }
+  });
+  return s+'</svg>';
+}
+function kpisPeso(){
+  var pts=pesosOrdenados();if(!pts.length)return '';
+  var ini=pts[0].kg,act=pts[pts.length-1].kg,obj=+S.goals.peso||0;
+  var dif=Math.round((act-ini)*10)/10;
+  var h='<div class="kpi"><b>'+ini+' kg</b><span>peso inicial</span></div><div class="kpi"><b>'+act+' kg</b><span>peso actual</span></div>';
+  h+='<div class="kpi"><b>'+(dif>0?'+':'')+dif+' kg</b><span>cambio desde el inicio</span></div>';
+  if(obj)h+='<div class="kpi"><b>'+obj+' kg</b><span>peso objetivo</span></div>';
+  return h;
+}
+function progresoObjetivo(){
+  var pts=pesosOrdenados();var obj=+S.goals.peso||0;var h='';
+  if(obj&&pts.length){
+    var ini=pts[0].kg,act=pts[pts.length-1].kg;
+    if(ini===obj||Math.abs(act-obj)<0.05){h+='<div class="msg"><strong>¡Llegaste a tu peso objetivo!</strong> Contáselo a tu nutricionista para definir cómo seguir.</div>';}
+    else{
+      var p=Math.max(0,Math.min(100,Math.round((ini-act)/(ini-obj)*100)));
+      var falta=Math.round(Math.abs(act-obj)*10)/10;
+      h+='<p><strong>Progreso hacia mi peso objetivo: '+p+'%</strong> (me faltan '+falta+' kg)</p><div class="progreso" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+p+'" aria-label="Progreso hacia el peso objetivo"><div style="width:'+p+'%"></div></div>';
+    }
+  }
+  var hs=(S.goals.habitos||[]).map(function(id){var x=HABITOS.filter(function(h){return h.id===id;})[0];return x?x.label:'';}).filter(Boolean);
+  if(hs.length)h+='<p style="margin-top:14px"><strong>Hábitos que quiero trabajar:</strong> '+hs.map(esc).join(' · ')+'</p>';
+  if(S.goals.texto)h+='<p><strong>Mi objetivo:</strong> '+esc(S.goals.texto)+'</p>';
+  return h;
+}
+function listaPesos(){
+  var pts=pesosOrdenados();if(!pts.length)return '';
+  var h='<table><thead><tr><th>Fecha</th><th>Peso</th><th><span class="sr" style="position:absolute;left:-999px">Acción</span></th></tr></thead><tbody>';
+  pts.slice().reverse().forEach(function(p){
+    h+='<tr><td>'+esc(fmt(p.date,true))+'</td><td>'+p.kg+' kg</td><td><button type="button" class="dato-borrar" data-del="'+p.date+'" aria-label="Quitar el peso del '+esc(fmt(p.date))+'">Quitar</button></td></tr>';
+  });
+  return h+'</tbody></table>';
+}
+function renderPeso(){
+  $('peso-grafico').innerHTML=graficoPeso();
+  $('peso-kpis').innerHTML=kpisPeso();
+  $('peso-lista').innerHTML=listaPesos();
+  $('obj-peso').value=S.goals.peso||'';
+  $('obj-texto').value=S.goals.texto||'';
+  var sel=S.goals.habitos||[];
+  $('obj-habitos').innerHTML=HABITOS.map(function(h){
+    return '<label class="check"><input type="checkbox" data-obj="'+h.id+'"'+(sel.indexOf(h.id)>-1?' checked':'')+'><span>'+esc(h.label)+'</span></label>';
+  }).join('');
+  $('obj-progreso').innerHTML=progresoObjetivo();
+  if(!$('peso-fecha').value)$('peso-fecha').value=hoy();
+}
+$('peso-fecha').max=hoy();
+$('form-peso').addEventListener('submit',function(){
+  var f=$('peso-fecha').value,kg=parseFloat(String($('peso-kg').value).replace(',','.'));
+  if(!f||!(kg>=20&&kg<=400)){estado('Revisá la fecha y el peso (entre 20 y 400 kg).','estado');alert('Revisá la fecha y el peso: tiene que ser un número entre 20 y 400 kg.');return;}
+  kg=Math.round(kg*10)/10;
+  S.weights=S.weights.filter(function(p){return p.date!==f;});
+  S.weights.push({date:f,kg:kg});
+  $('peso-kg').value='';
+  guardar('Peso guardado ✓','estado-obj');renderPeso();
+});
+$('peso-lista').addEventListener('click',function(ev){
+  var b=ev.target.closest('button[data-del]');if(!b)return;
+  if(!confirm('¿Quitar este peso del registro?'))return;
+  S.weights=S.weights.filter(function(p){return p.date!==b.dataset.del;});
+  guardar('Peso quitado','estado-obj');renderPeso();
+});
+$('form-obj').addEventListener('submit',function(){
+  var v=parseFloat(String($('obj-peso').value).replace(',','.'));
+  S.goals.peso=(v>=20&&v<=400)?Math.round(v*10)/10:'';
+  S.goals.texto=$('obj-texto').value.trim();
+  S.goals.habitos=[].slice.call(document.querySelectorAll('[data-obj]:checked')).map(function(c){return c.dataset.obj;});
+  guardar('Objetivos guardados ✓','estado-obj');renderPeso();
+});
+
+/* ---------- CONSULTA ---------- */
+function renderConsulta(){
+  $('nombre').value=S.nombre||'';
+  var dias=ultimosDias(7);var reg=0,suma=0;
+  dias.forEach(function(d){var e=S.entries[d];if(tieneRegistro(e)){reg++;suma+=pctDia(e).pct;}});
+  var prom=reg?Math.round(suma/reg):0;
+  var h='<h3>Resumen para mi control'+(S.nombre?' · '+esc(S.nombre):'')+'</h3>';
+  h+='<p class="solo-imprimir">Hospital Regional Río Grande · Servicio de Nutrición · Emitido el '+esc(fmt(hoy(),true))+'</p>';
+  h+='<div class="kpis"><div class="kpi"><b>'+reg+' de 7</b><span>días registrados</span></div><div class="kpi"><b>'+prom+'%</b><span>cumplimiento promedio</span></div></div>';
+  h+='<h3>Mi curva de peso</h3>'+graficoPeso();
+  h+='<div class="kpis">'+kpisPeso()+'</div>';
+  var po=progresoObjetivo();if(po)h+='<h3>Mis objetivos</h3>'+po;
+  h+='<h3 style="margin-top:20px">Mis últimos 7 días</h3><div class="tabla-scroll"><table><thead><tr><th>Hábito</th>';
+  dias.forEach(function(d){h+='<th>'+esc(parse(d).toLocaleDateString('es-AR',{weekday:'short',day:'numeric'}))+'</th>';});
+  h+='</tr></thead><tbody>';
+  activos().forEach(function(hb){
+    h+='<tr><td>'+esc(hb.label)+'</td>';
+    dias.forEach(function(d){
+      var e=S.entries[d];
+      h+='<td>'+(!tieneRegistro(e)?'–':(cumple(e,hb.id)?'✓':'·'))+'</td>';
+    });
+    h+='</tr>';
+  });
+  h+='<tr><th>Cumplimiento</th>';
+  dias.forEach(function(d){var e=S.entries[d];h+='<th>'+(tieneRegistro(e)?pctDia(e).pct+'%':'–')+'</th>';});
+  h+='</tr></tbody></table></div><p style="font-size:.85rem;color:#52626f">✓ cumplido · · no cumplido · – sin registro</p>';
+  var notas=dias.filter(function(d){return S.entries[d]&&S.entries[d].nota;});
+  if(notas.length){
+    h+='<h3>Lo que quiero contarle a mi nutricionista</h3>';
+    notas.forEach(function(d){h+='<p><strong>'+esc(fmt(d,true))+':</strong> '+esc(S.entries[d].nota)+'</p>';});
+  }
+  h+='<p class="solo-imprimir" style="font-size:.8rem;margin-top:20px">Registro realizado por el propio paciente. Herramienta educativa que no reemplaza la consulta profesional.</p>';
+  $('consulta-contenido').innerHTML=h;
+}
+$('nombre').addEventListener('input',function(){S.nombre=$('nombre').value;guardar();renderConsulta();});
+$('btn-imprimir').addEventListener('click',function(){window.print();});
+
+/* ---------- DATOS ---------- */
+$('btn-export').addEventListener('click',function(){
+  var blob=new Blob([JSON.stringify(S,null,2)],{type:'application/json'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='mi-registro-nutricional-'+hoy()+'.json';document.body.appendChild(a);a.click();
+  setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},500);
+});
+$('file-import').addEventListener('change',function(ev){
+  var f=ev.target.files[0];if(!f)return;
+  var r=new FileReader();
+  r.onload=function(){
+    try{
+      var d=JSON.parse(r.result);
+      if(!d||typeof d!=='object'||typeof d.entries!=='object')throw new Error('formato');
+      if(!confirm('Esto reemplaza los datos actuales de este dispositivo por los de la copia. ¿Continuar?'))return;
+      var v=vacio();for(var k in v){if(d[k]!==undefined)v[k]=d[k];}
+      if(!Array.isArray(v.weights))v.weights=[];
+      S=v;guardar('Copia cargada ✓');renderForm();mostrarTab('hoy');document.dispatchEvent(new Event('rn-cambio'));
+    }catch(e){alert('No se pudo leer el archivo. Asegurate de elegir una copia descargada desde esta página.');}
+    ev.target.value='';
+  };
+  r.readAsText(f);
+});
+$('btn-borrar').addEventListener('click',function(){
+  if(!confirm('Se van a borrar todos tus registros, pesos y objetivos de este dispositivo. Esto no se puede deshacer. ¿Querés continuar?'))return;
+  S=vacio();
+  try{localStorage.removeItem(KEY);}catch(e){}
+  renderForm();mostrarTab('hoy');estado('Datos borrados');document.dispatchEvent(new Event('rn-cambio'));
+});
+
+window.RN={get:function(){return S;},save:function(m,d){guardar(m,d);}};
+renderForm();
+})();
+</script>
+<script>
+(function(){
+'use strict';
+function $(id){return document.getElementById(id);}
+function mezclar(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function mensajeFinal(p){
+  if(p>=80)return '¡Muy bien! Recordás muy bien lo que conversamos en la consulta.';
+  if(p>=50)return '¡Vas muy bien! Repasá la sección "Mi plato" y volvé a jugar.';
+  return 'Está bien: practicar es aprender. Repasá "Mi plato" y probá de nuevo. También podés preguntarle a tu nutricionista en el próximo control.';
+}
+
+/* ---------- Fotos de las recetas (carpeta img/) ---------- */
+var FOTOS=['galletas-avena','budin-naranja','granola-casera','avena-cremosa','tostadas-tomate','ensalada-lentejas','merluza-horno','tortilla-verduras','garbanzos-espinaca'];
+[].forEach.call(document.querySelectorAll('details.receta'),function(d,i){
+  var cuerpo=d.querySelector('.receta-cuerpo'),sum=d.querySelector('summary');
+  if(!cuerpo||!sum||!FOTOS[i])return;
+  var partes=sum.childNodes[0].textContent.trim().split(' ');
+  var emo=partes.shift(),nombre=partes.join(' ');
+  var fig=document.createElement('figure');fig.className='foto';
+  var img=new Image();img.alt='Foto de la preparación: '+nombre;img.src='img/'+FOTOS[i]+'.jpg';
+  img.addEventListener('error',function(){fig.classList.add('sin-foto');});
+  var sp=document.createElement('span');sp.className='emo';sp.setAttribute('aria-hidden','true');sp.textContent=emo;
+  fig.appendChild(img);fig.appendChild(sp);
+  cuerpo.insertBefore(fig,cuerpo.firstChild);
+});
+
+/* ---------- Juego 1: armá el plato ---------- */
+var GR=[
+  ['verd','🥦','Verduras','½ plato'],
+  ['cer','🍞','Cereales y hortalizas C','¼ plato'],
+  ['carne','🍗','Carnes y huevo','¼ plato'],
+  ['apar','🍎','Aparte del plato','fruta, lácteos y aceite']
+];
+function nombreGrupo(k){for(var i=0;i<GR.length;i++){if(GR[i][0]===k)return GR[i][2];}return '';}
+var ALIM=[
+  ['🥬','Lechuga','verd'],['🥕','Zanahoria','verd'],['🍅','Tomate','verd'],['🥦','Brócoli','verd'],['🥒','Pepino','verd'],['🎃','Zapallo','verd'],
+  ['🥔','Papa','cer'],['🍠','Batata','cer'],['🌽','Choclo','cer'],['🍚','Arroz','cer'],['🍞','Pan','cer'],
+  ['🍗','Pollo sin piel','carne'],['🐟','Pescado','carne'],['🥚','Huevo','carne'],['🥩','Carne vacuna magra','carne'],
+  ['🍎','Manzana','apar'],['🍌','Banana','apar'],['🥛','Leche o yogur','apar'],['🧀','Queso','apar'],['🫒','Aceite de oliva','apar']
+];
+var J1={};
+function j1ini(){J1={lista:mezclar(ALIM).slice(0,10),i:0,ok:0,resp:false};j1pinta();}
+function j1pinta(){
+  var c=$('j1'),t=J1.lista.length;J1.resp=false;
+  if(J1.i>=t){
+    c.innerHTML='<div class="final"><p class="grande">'+J1.ok+' de '+t+'</p><p>'+mensajeFinal(Math.round(J1.ok/t*100))+'</p><button type="button" class="btn verde" data-j1="again">Jugar de nuevo</button></div>';
+    return;
+  }
+  var a=J1.lista[J1.i];
+  var h='<p class="paso">Alimento '+(J1.i+1)+' de '+t+'</p><div class="alimento"><span aria-hidden="true">'+a[0]+'</span><small>'+a[1]+'</small></div><p style="text-align:center;margin:8px 0 0">¿Dónde va en el plato?</p><div class="resp">';
+  GR.forEach(function(g){h+='<button type="button" class="opt" data-g="'+g[0]+'"><span aria-hidden="true">'+g[1]+'</span> '+g[2]+' <small>('+g[3]+')</small></button>';});
+  c.innerHTML=h+'</div><p class="fb" role="status" aria-live="polite"></p><div class="sig"></div>';
+}
+$('j1').addEventListener('click',function(ev){
+  var b=ev.target.closest('button');if(!b)return;
+  if(b.dataset.j1==='again'){j1ini();return;}
+  if(b.dataset.j1==='next'){J1.i++;j1pinta();return;}
+  if(!b.dataset.g||J1.resp)return;
+  J1.resp=true;
+  var a=J1.lista[J1.i],ok=b.dataset.g===a[2];
+  if(ok)J1.ok++;
+  [].forEach.call($('j1').querySelectorAll('.opt'),function(x){x.disabled=true;if(x.dataset.g===a[2])x.classList.add('ok');});
+  if(!ok)b.classList.add('mal');
+  $('j1').querySelector('.fb').textContent=ok?'¡Correcto! 🎉':'Casi. '+a[1]+' va en: '+nombreGrupo(a[2])+'.';
+  $('j1').querySelector('.sig').innerHTML='<button type="button" class="btn chico" data-j1="next">'+(J1.i+1>=J1.lista.length?'Ver mi resultado':'Siguiente')+'</button>';
+  $('j1').querySelector('.sig button').focus();
+});
+j1ini();
+
+/* ---------- Juego 2: preguntas rápidas ---------- */
+var PREG=[
+  {p:'¿Cuánto lugar ocupan las verduras en el plato?',o:['Un cuarto del plato','La mitad del plato','Solo un poquito, como decoración'],c:1,e:'Las verduras ocupan la mitad del plato en el almuerzo y la cena. Cuanto más variadas y coloridas, mejor.'},
+  {p:'¿Cuál de estos alimentos va junto con los cereales y el pan?',o:['Lechuga','Papa','Tomate'],c:1,e:'La papa, la batata y el choclo son hortalizas C y van en el cuarto de los cereales.'},
+  {p:'¿Dónde van la fruta, los lácteos y el aceite?',o:['Aparte del plato','Mezclados con las carnes','Dentro de la mitad de verduras'],c:0,e:'Se suman aparte del plato, a lo largo del día.'},
+  {p:'¿Cuál es la mejor bebida para acompañar el día?',o:['Gaseosa','Jugo de caja','Agua'],c:2,e:'El agua es la bebida principal. Tomala a lo largo de todo el día.'},
+  {p:'¿Qué forma de cocinar ayuda a usar menos grasa?',o:['Al horno, a la plancha o hervido','Frito','Rebozado y frito'],c:0,e:'Cocinar al horno, a la plancha o hervido permite usar menos grasa.'},
+  {p:'¿Cómo conviene comer la fruta?',o:['Entera y bien lavada','Solo en jugo','Siempre con azúcar'],c:0,e:'Entera es mejor que en jugo: es más saciante y conserva su fibra.'},
+  {p:'¿Para qué sirve anotar mis hábitos todos los días?',o:['Para reemplazar la consulta','Para ver mi progreso y conversarlo en el control','Para no volver al hospital'],c:1,e:'El registro te ayuda a ver tu progreso y a conversarlo con tu nutricionista en cada control.'}
+];
+var J2={};
+function j2ini(){
+  J2={lista:mezclar(PREG).map(function(q){
+    var idx=mezclar([0,1,2]);
+    return {p:q.p,e:q.e,o:idx.map(function(i){return q.o[i];}),c:idx.indexOf(q.c)};
+  }),i:0,ok:0,resp:false};
+  j2pinta();
+}
+function j2pinta(){
+  var c=$('j2'),t=J2.lista.length;J2.resp=false;
+  if(J2.i>=t){
+    c.innerHTML='<div class="final"><p class="grande">'+J2.ok+' de '+t+'</p><p>'+mensajeFinal(Math.round(J2.ok/t*100))+'</p><button type="button" class="btn verde" data-j2="again">Jugar de nuevo</button></div>';
+    return;
+  }
+  var q=J2.lista[J2.i];
+  var h='<p class="paso">Pregunta '+(J2.i+1)+' de '+t+'</p><p style="font-weight:700;font-size:1.1rem;margin:4px 0 8px">'+q.p+'</p><div class="resp">';
+  q.o.forEach(function(t2,i){h+='<button type="button" class="opt" data-o="'+i+'">'+t2+'</button>';});
+  c.innerHTML=h+'</div><p class="fb" role="status" aria-live="polite"></p><div class="sig"></div>';
+}
+$('j2').addEventListener('click',function(ev){
+  var b=ev.target.closest('button');if(!b)return;
+  if(b.dataset.j2==='again'){j2ini();return;}
+  if(b.dataset.j2==='next'){J2.i++;j2pinta();return;}
+  if(b.dataset.o===undefined||J2.resp)return;
+  J2.resp=true;
+  var q=J2.lista[J2.i],ok=(+b.dataset.o)===q.c;
+  if(ok)J2.ok++;
+  [].forEach.call($('j2').querySelectorAll('.opt'),function(x){x.disabled=true;if(+x.dataset.o===q.c)x.classList.add('ok');});
+  if(!ok)b.classList.add('mal');
+  $('j2').querySelector('.fb').textContent=(ok?'¡Correcto! ':'Casi. ')+q.e;
+  $('j2').querySelector('.sig').innerHTML='<button type="button" class="btn chico" data-j2="next">'+(J2.i+1>=J2.lista.length?'Ver mi resultado':'Siguiente')+'</button>';
+  $('j2').querySelector('.sig button').focus();
+});
+j2ini();
+
+/* ---------- Calculadora de IMC ---------- */
+function fmt1(n){return n.toLocaleString('es-AR',{minimumFractionDigits:1,maximumFractionDigits:1});}
+$('form-imc').addEventListener('submit',function(){
+  var kg=parseFloat(String($('imc-peso').value).replace(',','.'));
+  var cm=parseFloat(String($('imc-talla').value).replace(',','.'));
+  var res=$('imc-res');
+  if(!(kg>=20&&kg<=400)||!(cm>=100&&cm<=230)){
+    res.innerHTML='<p class="msg">Revisá los datos: el peso debe estar entre 20 y 400 kg y la altura entre 100 y 230 cm.</p>';
+    return;
+  }
+  var m=cm/100,imc=kg/(m*m),cat;
+  if(imc<18.5)cat='Bajo peso';
+  else if(imc<25)cat='Peso normal';
+  else if(imc<30)cat='Sobrepeso';
+  else cat='Obesidad';
+  var pos=Math.max(0,Math.min(100,(imc-15)/25*100));
+  res.innerHTML='<div class="kpis"><div class="kpi"><b>'+fmt1(imc)+'</b><span>tu IMC</span></div><div class="kpi"><b>'+cat+'</b><span>categoría de referencia (OMS)</span></div></div>'+
+    '<div class="imc-barra" role="img" aria-label="Escala de IMC con tu resultado en '+fmt1(imc)+'"><div class="imc-marca" style="left:'+pos+'%"></div></div>'+
+    '<div class="imc-escala" aria-hidden="true"><span style="left:14%">18,5</span><span style="left:40%">25</span><span style="left:60%">30</span></div>'+
+    '<p class="msg">Este número es solo una referencia. Conversalo con tu nutricionista en el próximo control para interpretarlo junto con el resto de tu evaluación.</p>';
+});
+$('imc-ultimo').addEventListener('click',function(){
+  var kg=null;
+  try{
+    var d=JSON.parse(localStorage.getItem('registroNutricional_hrgrg_v1'));
+    if(d&&Array.isArray(d.weights)&&d.weights.length){
+      var w=d.weights.slice().sort(function(a,b){return a.date<b.date?-1:1;});
+      kg=w[w.length-1].kg;
+    }
+  }catch(e){}
+  if(kg){$('imc-peso').value=kg;$('imc-res').innerHTML='';}
+  else $('imc-res').innerHTML='<p class="msg">Todavía no cargaste ningún peso en "Peso y objetivos". Podés escribirlo acá a mano.</p>';
+});
+})();
+</script>
+<script>
+(function(){
+'use strict';
+function $(id){return document.getElementById(id);}
+function esc(t){return String(t).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function mezclar(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function mensaje(p){
+  if(p>=80)return '¡Muy bien! Recordás muy bien lo que conversamos en la consulta.';
+  if(p>=50)return '¡Vas muy bien! Repasá y volvé a jugar.';
+  return 'Está bien: practicar es aprender. Repasá y probá de nuevo, o preguntale a tu nutricionista en el próximo control.';
+}
+
+/* ================= LISTA DE COMPRAS ================= */
+var G=[
+  ['verd','🥦','Verduras','#2f8040','#ffffff',['Lechuga','Tomate','Zanahoria','Zapallito','Zapallo','Cebolla','Acelga','Espinaca','Brócoli','Morrón','Pepino','Remolacha']],
+  ['fruta','🍎','Frutas de estación','#d32f2f','#ffffff',['Manzana','Banana','Naranja','Mandarina','Pera','Frutillas','Durazno','Limón']],
+  ['cer','🌾','Cereales, legumbres y hortalizas C','#ebb94d','#3f2c00',['Avena','Arroz','Fideos','Pan integral','Lentejas','Garbanzos','Porotos','Papa','Batata','Choclo','Polenta']],
+  ['carne','🍗','Carnes, pescados y huevos','#b8431a','#ffffff',['Pollo','Merluza','Carne vacuna magra','Huevos','Atún al natural']],
+  ['lac','🥛','Lácteos','#2fa8d8','#06324a',['Leche','Yogur natural','Queso fresco','Ricota']],
+  ['acei','🫒','Aceites, frutos secos y condimentos','#7cb342','#1d3a05',['Aceite de oliva','Nueces','Almendras','Semillas','Orégano','Ajo']]
+];
+var OTRO=['otro','🛍️','Otros','#7b3fe4','#ffffff'];
+var GG=G.concat([OTRO]);
+var EJEMPLO=['Lechuga','Tomate','Zanahoria','Zapallito','Manzana','Banana','Naranja','Avena','Lentejas','Arroz','Huevos','Pollo','Merluza','Leche','Yogur natural','Aceite de oliva'];
+var tMsg;
+function msg(t){var e=$('cmp-estado');if(!e)return;e.textContent=t;clearTimeout(tMsg);tMsg=setTimeout(function(){e.textContent='';},2500);}
+function datos(){
+  if(!window.RN)return null;
+  var S=window.RN.get();
+  if(!S.compras||!Array.isArray(S.compras.items))S.compras={items:[]};
+  return S.compras;
+}
+function guardarC(m){if(window.RN)window.RN.save(m||'Lista guardada ✓','cmp-estado');}
+function buscar(n,g){
+  var c=datos();if(!c)return -1;
+  for(var i=0;i<c.items.length;i++){if(c.items[i].g===g&&c.items[i].n.toLowerCase()===n.toLowerCase())return i;}
+  return -1;
+}
+function grupoDe(n){
+  for(var i=0;i<G.length;i++){if(G[i][5].indexOf(n)>-1)return G[i][0];}
+  return 'otro';
+}
+function textoLista(){
+  var c=datos();if(!c)return '';
+  var out='Mi lista de compras 🛒\n';var hay=false;
+  GG.forEach(function(g){
+    var its=c.items.filter(function(i){return i.g===g[0]&&!i.ok;});
+    if(!its.length)return;
+    hay=true;out+='\n'+g[1]+' '+g[2]+'\n';
+    its.forEach(function(i){out+='• '+i.n+'\n';});
+  });
+  return hay?out:'';
+}
+function renderCompras(){
+  var c=datos();if(!c)return;
+  var h='';
+  G.forEach(function(g){
+    h+='<div class="cmp-grupo" style="--c:'+g[3]+';--t:'+g[4]+'"><h4>'+g[1]+' '+esc(g[2])+'</h4><div class="chips">';
+    g[5].forEach(function(n){
+      h+='<button type="button" class="chip" data-g="'+g[0]+'" data-n="'+esc(n)+'" aria-pressed="'+(buscar(n,g[0])>-1)+'">'+esc(n)+'</button>';
+    });
+    h+='</div></div>';
+  });
+  $('cmp-grupos').innerHTML=h;
+
+  var tot=c.items.length,hechos=c.items.filter(function(i){return i.ok;}).length;
+  $('cmp-cuenta').textContent=tot?'('+hechos+' de '+tot+' tildados)':'';
+  if(!tot){
+    $('cmp-lista').innerHTML='<p class="vacio">Tu lista está vacía. Tocá alimentos arriba para agregarlos.</p>';
+  }else{
+    var l='';
+    GG.forEach(function(g){
+      var any=false,b='';
+      c.items.forEach(function(it,idx){
+        if(it.g!==g[0])return;
+        any=true;
+        b+='<li><label class="cmp-item"><input type="checkbox" data-i="'+idx+'"'+(it.ok?' checked':'')+'><span>'+esc(it.n)+'</span></label><button type="button" class="dato-borrar" data-q="'+idx+'" aria-label="Quitar '+esc(it.n)+'">Quitar</button></li>';
+      });
+      if(any)l+='<div class="cmp-grupo" style="--c:'+g[3]+';--t:'+g[4]+'"><h4>'+g[1]+' '+esc(g[2])+'</h4><ul class="cmp-ul">'+b+'</ul></div>';
+    });
+    $('cmp-lista').innerHTML=l;
+  }
+  var t=textoLista();
+  $('cmp-wsp').href=t?('https://wa.me/?text='+encodeURIComponent(t)):'#';
+}
+$('cmp-grupos').addEventListener('click',function(ev){
+  var b=ev.target.closest('.chip');if(!b)return;
+  var c=datos();if(!c)return;
+  var i=buscar(b.dataset.n,b.dataset.g);
+  if(i>-1)c.items.splice(i,1);else c.items.push({n:b.dataset.n,g:b.dataset.g,ok:false});
+  guardarC();renderCompras();
+  var nuevo=document.querySelector('.chip[data-g="'+b.dataset.g+'"][data-n="'+b.dataset.n.replace(/"/g,'\\"')+'"]');
+  if(nuevo)nuevo.focus();
+});
+$('cmp-lista').addEventListener('change',function(ev){
+  var t=ev.target;if(t.dataset.i===undefined)return;
+  var c=datos();if(!c)return;
+  var it=c.items[+t.dataset.i];if(!it)return;
+  it.ok=t.checked;guardarC();renderCompras();
+});
+$('cmp-lista').addEventListener('click',function(ev){
+  var b=ev.target.closest('button[data-q]');if(!b)return;
+  var c=datos();if(!c)return;
+  c.items.splice(+b.dataset.q,1);guardarC('Producto quitado');renderCompras();
+});
+$('cmp-form').addEventListener('submit',function(){
+  var v=$('cmp-otro').value.trim();if(!v)return;
+  var c=datos();if(!c)return;
+  var g=grupoDe(v.charAt(0).toUpperCase()+v.slice(1));
+  if(buscar(v,g)<0)c.items.push({n:v,g:g,ok:false});
+  $('cmp-otro').value='';guardarC('Agregado a tu lista ✓');renderCompras();
+});
+$('cmp-ejemplo').addEventListener('click',function(){
+  var c=datos();if(!c)return;
+  EJEMPLO.forEach(function(n){var g=grupoDe(n);if(buscar(n,g)<0)c.items.push({n:n,g:g,ok:false});});
+  guardarC('Ejemplo cargado ✓');renderCompras();
+});
+$('cmp-hechos').addEventListener('click',function(){
+  var c=datos();if(!c)return;
+  c.items=c.items.filter(function(i){return !i.ok;});
+  window.RN.get().compras=c;guardarC('Tildados quitados');renderCompras();
+});
+$('cmp-vaciar').addEventListener('click',function(){
+  var c=datos();if(!c||!c.items.length)return;
+  if(!confirm('¿Vaciar toda tu lista de compras?'))return;
+  c.items=[];guardarC('Lista vaciada');renderCompras();
+});
+$('cmp-wsp').addEventListener('click',function(ev){
+  if(!textoLista()){ev.preventDefault();msg('Primero agregá alimentos a tu lista.');}
+});
+function copiaManual(t){
+  var ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';
+  document.body.appendChild(ta);ta.select();
+  try{document.execCommand('copy');msg('Lista copiada ✓');}catch(e){msg('No se pudo copiar. Probá con el botón de WhatsApp.');}
+  ta.remove();
+}
+$('cmp-copiar').addEventListener('click',function(){
+  var t=textoLista();if(!t){msg('Primero agregá alimentos a tu lista.');return;}
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(t).then(function(){msg('Lista copiada ✓');},function(){copiaManual(t);});
+  }else copiaManual(t);
+});
+document.addEventListener('rn-cambio',renderCompras);
+
+/* ================= JUEGO: VERDAD O MITO ================= */
+var MITOS=[
+  ['Saltear comidas ayuda a bajar de peso.',false,'Mito. Saltear comidas suele hacer que llegues con mucha hambre y comas de más después. Conviene organizar tus comidas del día.'],
+  ['Las legumbres (lentejas, garbanzos, porotos) son una buena fuente de fibra y proteínas.',true,'Verdadero. Además son económicas y muy versátiles: ensaladas, guisos, tortillas y más.'],
+  ['El agua es la mejor bebida para acompañar el día.',true,'Verdadero. Es tu bebida principal: tomala a lo largo de todo el día.'],
+  ['La fruta entera hay que evitarla siempre porque tiene azúcar.',false,'Mito. La fruta entera aporta fibra, vitaminas y minerales, y forma parte de una alimentación saludable. Cuánta y cuándo la define tu nutricionista según tu plan.'],
+  ['Si un producto dice "light" o "natural", siempre es saludable.',false,'Mito. Esas palabras no alcanzan: leé la etiqueta, mirá los sellos negros y la lista de ingredientes.'],
+  ['Comer despacio y sin pantallas te ayuda a notar cuándo ya estás satisfecho.',true,'Verdadero. Prestar atención a la comida ayuda a reconocer la saciedad.'],
+  ['Un jugo de frutas envasado equivale a comer la fruta entera.',false,'Mito. El jugo envasado suele tener azúcares agregados y no tiene la misma fibra ni saciedad que la fruta entera.'],
+  ['Dormir poco puede afectar tu apetito y tus elecciones de comida.',true,'Verdadero. El descanso influye en el hambre y en las ganas de comer. Por eso también registrás tu sueño.']
+];
+var M={};
+function mIni(){M={l:mezclar(MITOS).slice(0,6),i:0,ok:0,r:false};mPinta();}
+function mPinta(){
+  var c=$('j3'),t=M.l.length;M.r=false;
+  if(!c)return;
+  if(M.i>=t){
+    c.innerHTML='<div class="final"><p class="grande">'+M.ok+' de '+t+'</p><p>'+mensaje(Math.round(M.ok/t*100))+'</p><button type="button" class="btn verde" data-m="again">Jugar de nuevo</button></div>';
+    return;
+  }
+  c.innerHTML='<p class="paso">Afirmación '+(M.i+1)+' de '+t+'</p><p class="afirm">“'+esc(M.l[M.i][0])+'”</p><div class="resp"><button type="button" class="opt" data-m="v">✅ Verdadero</button><button type="button" class="opt" data-m="f">❌ Mito</button></div><p class="fb" role="status" aria-live="polite"></p><div class="sig"></div>';
+}
+if($('j3')){
+  $('j3').addEventListener('click',function(ev){
+    var b=ev.target.closest('button');if(!b)return;
+    var d=b.dataset.m;
+    if(d==='again'){mIni();return;}
+    if(d==='next'){M.i++;mPinta();return;}
+    if(d!=='v'&&d!=='f')return;
+    if(M.r)return;M.r=true;
+    var q=M.l[M.i],ok=(d==='v')===q[1];
+    if(ok)M.ok++;
+    [].forEach.call($('j3').querySelectorAll('.opt'),function(x){
+      x.disabled=true;
+      if((x.dataset.m==='v')===q[1])x.classList.add('ok');
+    });
+    if(!ok)b.classList.add('mal');
+    $('j3').querySelector('.fb').textContent=(ok?'¡Correcto! ':'Casi. ')+q[2];
+    $('j3').querySelector('.sig').innerHTML='<button type="button" class="btn chico" data-m="next">'+(M.i+1>=M.l.length?'Ver mi resultado':'Siguiente')+'</button>';
+    $('j3').querySelector('.sig button').focus();
+  });
+  mIni();
+}
+
+/* ================= ETIQUETAS: ZONAS ================= */
+var ZT={
+  oct:['Los sellos negros','En Argentina, la ley de Promoción de la Alimentación Saludable obliga a poner sellos negros en el frente de los envases cuando un producto tiene exceso de azúcares, sodio, grasas saturadas, grasas totales o calorías. Cuantos más sellos, más conviene dejarlo para ocasiones especiales y elegir opciones con menos sellos o sin sellos.','#111111'],
+  porcion:['La porción','Mirá cuánto es una porción y cuántas porciones trae el envase: un paquete "chico" puede traer varias porciones. Para comparar dos productos, usá siempre la columna "por 100 g", así comparás en igualdad de condiciones.','#0b7a7a'],
+  tabla:['La información nutricional','Fijate sobre todo en azúcares, grasas saturadas y sodio (la sal): conviene que sean bajos. La fibra, en cambio, conviene que sea alta. Si un número te parece alto, compará con otro producto similar.','#d32f2f'],
+  ing:['Los ingredientes','Se enumeran de mayor a menor cantidad: los primeros son los que más tiene el producto. Si el azúcar o la grasa aparecen entre los primeros, hay mucho. El azúcar tiene muchos nombres: jarabe de maíz, glucosa, dextrosa, maltodextrina, miel, azúcar invertido. Una lista corta y que reconozcas suele ser buena señal.','#5c8f1f']
+};
+$('et-paquete').addEventListener('click',function(ev){
+  var b=ev.target.closest('.zona');if(!b)return;
+  [].forEach.call(document.querySelectorAll('.zona'),function(z){
+    var on=z===b;z.setAttribute('aria-pressed',on?'true':'false');z.classList.toggle('on',on);
+    if(on)z.style.setProperty('--zc',ZT[z.dataset.z][2]);
+  });
+  var t=ZT[b.dataset.z];
+  $('et-info').style.setProperty('--zc',t[2]);
+  $('et-info').innerHTML='<strong style="font-size:1.15rem">'+t[0]+'</strong><p>'+t[1]+'</p>';
+});
+
+/* ================= ETIQUETAS: DUELO ================= */
+var DUELOS=[
+  {q:'Para el desayuno, ¿cuál conviene más?',
+   a:{n:'Cereal de maíz azucarado',oc:['AZÚCARES','CALORÍAS'],d:'Azúcares: 30 g cada 100 g',i:'maíz, azúcar, jarabe de glucosa…'},
+   b:{n:'Avena arrollada',oc:[],d:'Azúcares: casi nada',i:'avena'},
+   c:'b',e:'La avena no tiene sellos y su único ingrediente es avena. Podés sumarle fruta fresca para darle sabor.'},
+  {q:'¿Qué yogur elegís para el día a día?',
+   a:{n:'Yogur natural',oc:[],d:'Sin azúcar agregada',i:'leche, fermentos lácticos'},
+   b:{n:'Yogur sabor frutilla',oc:['AZÚCARES'],d:'Azúcar agregada',i:'leche, azúcar, aromatizante…'},
+   c:'a',e:'El natural no tiene sellos. Si querés sabor, agregale fruta fresca picada.'},
+  {q:'Para la merienda, ¿cuál es mejor opción?',
+   a:{n:'Barra de cereal con chocolate',oc:['AZÚCARES','GRASAS SATURADAS'],d:'Azúcares altos',i:'azúcar, jarabe, chocolate…'},
+   b:{n:'Manzana',oc:[],d:'Fruta entera, sin etiqueta',i:'manzana'},
+   c:'b',e:'La fruta entera aporta fibra y vitaminas y no lleva sellos. Las barras suelen tener bastante azúcar.'},
+  {q:'Para acompañar el almuerzo, ¿qué elegís?',
+   a:{n:'Bebida cola',oc:['AZÚCARES'],d:'Mucha azúcar en cada vaso',i:'agua, azúcar, colorante…'},
+   b:{n:'Agua con rodajas de limón',oc:[],d:'Sin azúcar',i:'agua, limón'},
+   c:'b',e:'El agua es la mejor bebida para todo el día. El limón le da sabor sin agregar azúcar.'},
+  {q:'Para picar mirando una película, ¿cuál conviene más?',
+   a:{n:'Snack salado de bolsa',oc:['SODIO','GRASAS TOTALES'],d:'Mucho sodio y grasa',i:'papas, aceite, sal, saborizantes…'},
+   b:{n:'Pochoclo casero sin sal',oc:[],d:'Hecho en casa',i:'maíz pisingallo, un poco de aceite'},
+   c:'b',e:'Hecho en casa y sin sal agregada, controlás vos lo que lleva. Los snacks de bolsa suelen tener mucho sodio y grasa.'}
+];
+var E={};
+function oct(t){return '<span class="oct oct-s">EXCESO EN '+t+'</span>';}
+function prodHTML(k,p){
+  return '<button type="button" class="prod" data-k="'+k+'"><strong>'+p.n+'</strong><span class="octs" style="justify-content:flex-start;margin:0">'+(p.oc.length?p.oc.map(oct).join(''):'<span class="sinoct">Sin sellos negros ✓</span>')+'</span><span class="pd">'+p.d+'</span><span class="pd"><em>Ingredientes:</em> '+p.i+'</span></button>';
+}
+function eIni(){
+  E={l:mezclar(DUELOS).map(function(d){
+    var inv=Math.random()<0.5;
+    var A=inv?d.b:d.a,B=inv?d.a:d.b;
+    var cor=inv?(d.c==='a'?'b':'a'):d.c;
+    return {q:d.q,A:A,B:B,c:cor,e:d.e};
+  }),i:0,ok:0,r:false};
+  ePinta();
+}
+function ePinta(){
+  var c=$('et-juego'),t=E.l.length;E.r=false;
+  if(E.i>=t){
+    c.innerHTML='<div class="final"><p class="grande">'+E.ok+' de '+t+'</p><p>'+mensaje(Math.round(E.ok/t*100))+'</p><button type="button" class="btn verde" data-e="again">Jugar de nuevo</button></div>';
+    return;
+  }
+  var d=E.l[E.i];
+  c.innerHTML='<p class="paso">Duelo '+(E.i+1)+' de '+t+'</p><p class="afirm">'+d.q+'</p><div class="duelo">'+prodHTML('a',d.A)+prodHTML('b',d.B)+'</div><p class="fb" role="status" aria-live="polite"></p><div class="sig"></div>';
+}
+$('et-juego').addEventListener('click',function(ev){
+  var b=ev.target.closest('button');if(!b)return;
+  if(b.dataset.e==='again'){eIni();return;}
+  if(b.dataset.e==='next'){E.i++;ePinta();return;}
+  if(!b.dataset.k||E.r)return;
+  E.r=true;
+  var d=E.l[E.i],ok=b.dataset.k===d.c;
+  if(ok)E.ok++;
+  [].forEach.call($('et-juego').querySelectorAll('.prod'),function(x){
+    x.disabled=true;if(x.dataset.k===d.c)x.classList.add('ok');
+  });
+  if(!ok)b.classList.add('mal');
+  $('et-juego').querySelector('.fb').textContent=(ok?'¡Correcto! ':'Casi. ')+d.e;
+  $('et-juego').querySelector('.sig').innerHTML='<button type="button" class="btn chico" data-e="next">'+(E.i+1>=E.l.length?'Ver mi resultado':'Siguiente')+'</button>';
+  $('et-juego').querySelector('.sig button').focus();
+});
+
+renderCompras();
+eIni();
+})();
+</script>
+</body>
+</html>
